@@ -55,23 +55,24 @@ def create_app(config_name='default'):
     login_manager.init_app(app)
     login_manager.login_view = 'login'
     
-    # Initialize scheduler
-    def init_scheduler():
-        try:
-            scheduler.add_job(
-                func=lambda: generate_daily_questions(),
-                trigger=CronTrigger(hour=1, minute=0),
-                id='generate_daily_questions',
-                name='Generate daily Bible quiz questions',
-                replace_existing=True
-            )
-            scheduler.start()
-            logger.info("Scheduler started successfully")
-        except Exception as e:
-            logger.error(f"Error starting scheduler: {str(e)}")
-    
-    with app.app_context():
-        init_scheduler()
+    # Initialize scheduler (only in development)
+    if os.getenv('FLASK_ENV') != 'production':
+        def init_scheduler():
+            try:
+                scheduler.add_job(
+                    func=lambda: generate_daily_questions(),
+                    trigger=CronTrigger(hour=1, minute=0),
+                    id='generate_daily_questions',
+                    name='Generate daily Bible quiz questions',
+                    replace_existing=True
+                )
+                scheduler.start()
+                logger.info("Scheduler started successfully")
+            except Exception as e:
+                logger.error(f"Error starting scheduler: {str(e)}")
+        
+        with app.app_context():
+            init_scheduler()
     
     # Register routes
     from routes import register_routes
@@ -85,7 +86,14 @@ app = create_app()
 # Cleanup scheduler when app shuts down
 @atexit.register
 def shutdown_scheduler():
-    scheduler.shutdown()
+    if scheduler.running:
+        scheduler.shutdown()
+
+# Vercel serverless function handler
+def handler(request, context):
+    """Handler for Vercel serverless functions"""
+    with app.app_context():
+        return app(request, context)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=True) 
+    app.run(host='0.0.0.0', port=5000, debug=True) 
