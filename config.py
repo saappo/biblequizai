@@ -1,28 +1,33 @@
 import os
 
 class Config:
-    # Get the base directory of the project
-    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-    
-    # Database configuration
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'biblequiz.db')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    
-    # Flask configuration
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-key-please-change-in-production'
-    TEMPLATES_AUTO_RELOAD = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///bible_quiz.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    DEBUG = False
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///bible_quiz.db'
 
 class ProductionConfig(Config):
     DEBUG = False
     # In production, use environment variables for sensitive data
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    DATABASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bible_quiz.db')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    
+    # Vercel Postgres specific settings
+    if SQLALCHEMY_DATABASE_URI and SQLALCHEMY_DATABASE_URI.startswith('postgres://'):
+        # Convert postgres:// to postgresql:// for newer SQLAlchemy versions
+        SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace('postgres://', 'postgresql://', 1)
+
+class TestingConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 
 config = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
+    'testing': TestingConfig,
     'default': DevelopmentConfig
 } 

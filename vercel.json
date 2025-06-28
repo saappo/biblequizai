@@ -19,5 +19,11 @@
     "vercel_app.py": {
       "runtime": "python3.9"
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/generate-questions",
+      "schedule": "0 1 * * *"
+    }
+  ]
 } 
