@@ -1,0 +1,42 @@
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Log files
+*.log
+*.log.*
+
+# Environment files
+.env
+.env.local
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Instance folder
+instance/
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md 
