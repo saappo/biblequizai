@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to BibleQuizAI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap');
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Crimson Pro', serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #f9f4e8;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20h60v60H20z' fill='none' stroke='%23d4c4a8' stroke-width='0.5'/%3E%3Ctext x='50' y='50' font-family='serif' font-size='20' fill='%23d4c4a8' text-anchor='middle' dominant-baseline='middle'%3Eא%3C/text%3E%3Ctext x='30' y='30' font-family='serif' font-size='15' fill='%23d4c4a8' text-anchor='middle' dominant-baseline='middle'%3Eב%3C/text%3E%3Ctext x='70' y='70' font-family='serif' font-size='15' fill='%23d4c4a8' text-anchor='middle' dominant-baseline='middle'%3Eג%3C/text%3E%3Ctext x='30' y='70' font-family='serif' font-size='15' fill='%23d4c4a8' text-anchor='middle' dominant-baseline='middle'%3Eד%3C/text%3E%3Ctext x='70' y='30' font-family='serif' font-size='15' fill='%23d4c4a8' text-anchor='middle' dominant-baseline='middle'%3Eה%3C/text%3E%3C/svg%3E");
+            color: #2c1810;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .welcome-header {
+            flex-shrink: 0;
+            padding: 20px;
+        }
+
+        .difficulty-options {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 40px 20px;
+            padding: 0;
+            min-height: 0;
+            overflow-y: auto;
+        }
+
+        .difficulty-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            margin: 0;
+            border: 1px solid #d4c4a8;
+        }
+
+        .difficulty-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .difficulty-card h2 {
+            margin: 0 0 10px 0;
+            color: #2c1810;
+        }
+
+        .difficulty-card p {
+            margin: 0;
+            color: #4a3528;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .difficulty-card.easy {
+            background-color: #f0f7e9;
+            border-color: #8b7355;
+        }
+
+        .difficulty-card.medium {
+            background-color: #fff4e5;
+            border-color: #8b7355;
+        }
+
+        .difficulty-card.hard {
+            background-color: #f9e8e8;
+            border-color: #8b7355;
+        }
+
+        .logo-container {
+            flex-shrink: 0;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(212, 196, 168, 0.3);
+        }
+
+        .logo {
+            max-width: 120px;
+            height: auto;
+            transition: opacity 0.2s;
+            opacity: 0.8;
+        }
+
+        .logo:hover {
+            opacity: 1;
+        }
+
+        .footer-link {
+            text-decoration: none;
+            color: inherit;
+            display: inline-block;
+        }
+
+        .welcome-description {
+            margin: 20px auto;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #d4c4a8;
+            max-width: 600px;
+        }
+
+        .daily-badge {
+            display: inline-block;
+            background-color: #8b7355;
+            color: #f9f4e8;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1em;
+            margin: 10px 0;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        @media (max-height: 800px) {
+            .difficulty-options {
+                margin: 20px;
+            }
+            
+            .difficulty-card {
+                padding: 15px;
+            }
+            
+            .welcome-header {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-header">
+        <h1>Welcome to BibleQuizAI</h1>
+        <div class="daily-badge">Daily Bible Quiz</div>
+        <p>Test your knowledge of the Bible with our interactive quiz!</p>
+        <div class="welcome-description">
+            <p>New questions are available every day!</p>
+        </div>
+    </div>
+    
+    <div class="difficulty-options">
+        <a href="{{ url_for('public_quiz', difficulty='Easy') }}" class="difficulty-card easy">
+            <h2>Easy</h2>
+            <p>Perfect for beginners. Basic questions about well-known Bible stories and characters.</p>
+        </a>
+        
+        <a href="{{ url_for('public_quiz', difficulty='Medium') }}" class="difficulty-card medium">
+            <h2>Medium</h2>
+            <p>For regular Bible readers. Test your knowledge of key events and teachings.</p>
+        </a>
+        
+        <a href="{{ url_for('public_quiz', difficulty='Hard') }}" class="difficulty-card hard">
+            <h2>Hard</h2>
+            <p>Challenge yourself! Advanced questions about specific details and deeper biblical knowledge.</p>
+        </a>
+    </div>
+
+    <footer class="logo-container">
+        <a href="https://www.saappo.com" target="_blank" class="footer-link" title="Visit Saappo">
+            <img src="{{ url_for('static', filename='images/saappo-logo.png') }}" alt="Saappo Logo" class="logo">
+        </a>
+    </footer>
+</body>
+</html> 

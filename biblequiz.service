@@ -1,0 +1,33 @@
+[Unit]
+Description=Bible Quiz AI Gunicorn Service
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/biblequiz
+Environment="PATH=/var/www/biblequiz/venv/bin"
+Environment="FLASK_CONFIG=production"
+Environment="SECRET_KEY=your-secure-secret-key-here"
+Environment="PYTHONPATH=/var/www/biblequiz"
+
+# Add these lines to handle the socket properly
+RuntimeDirectory=biblequiz
+RuntimeDirectoryMode=0755
+
+ExecStart=/var/www/biblequiz/venv/bin/gunicorn \
+    --workers 3 \
+    --bind unix:/run/biblequiz/biblequiz.sock \
+    --access-logfile /var/log/biblequiz/access.log \
+    --error-logfile /var/log/biblequiz/error.log \
+    --capture-output \
+    --log-level info \
+    --timeout 120 \
+    --keep-alive 5 \
+    wsgi:application
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target 
