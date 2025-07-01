@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from flask_migrate import Migrate
+from question_generator import generate_daily_questions
 import atexit
 
 # Load environment variables
@@ -21,16 +22,21 @@ load_dotenv()
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-# Create a rotating file handler
-handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=3)
-handler.setLevel(logging.DEBUG)
-
-# Create a formatter
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-
-# Add the handler to the logger
-logger.addHandler(handler)
+# Configure logging for Railway (no file handler in production)
+if os.getenv('FLASK_ENV') != 'production':
+    # Create a rotating file handler for development
+    handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=3)
+    handler.setLevel(logging.DEBUG)
+    
+    # Create a formatter
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+    
+    # Add the handler to the logger
+    logger.addHandler(handler)
+else:
+    # In production, just use console logging
+    logging.basicConfig(level=logging.INFO)
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -73,6 +79,9 @@ def create_app(config_name='default'):
         
         with app.app_context():
             init_scheduler()
+    else:
+        # In production, we'll use Railway's cron jobs instead
+        logger.info("Running in production mode - scheduler disabled")
     
     # Register routes
     from routes import register_routes
