@@ -51,7 +51,13 @@ def create_app(config_name='default'):
     # Load configuration
     app.config.from_object(config[config_name])
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key-please-change')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///biblequiz.db')
+    
+    # Handle Railway PostgreSQL URL conversion
+    database_url = os.getenv('DATABASE_URL', 'sqlite:///biblequiz.db')
+    if database_url.startswith('postgres://'):
+        database_url = database_url.replace('postgres://', 'postgresql://', 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+    
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     

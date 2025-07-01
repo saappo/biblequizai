@@ -153,6 +153,11 @@ def register_routes(app):
     def home():
         return redirect(url_for('welcome'))
 
+    @app.route('/health')
+    def health_check():
+        """Simple health check endpoint for Railway"""
+        return {'status': 'healthy', 'message': 'Bible Quiz AI is running!'}
+
     @app.route('/submit', methods=['GET', 'POST'])
     def submit_suggestion():
         if request.method == 'POST':
