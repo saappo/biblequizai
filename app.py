@@ -108,6 +108,12 @@ def create_app(config_name='default'):
 try:
     app = create_app()
     logger.info("Flask app created successfully")
+    
+    # Add a simple test route to verify the app works
+    @app.route('/test-app')
+    def test_app():
+        return {'status': 'main app working', 'message': 'Bible Quiz AI is running!'}
+        
 except Exception as e:
     logger.error(f"Error creating Flask app: {str(e)}")
     # Create a minimal app for error handling
@@ -117,6 +123,10 @@ except Exception as e:
     @app.route('/')
     def fallback():
         return {'error': 'App initialization failed', 'message': str(e)}, 500
+    
+    @app.route('/health')
+    def health():
+        return {'status': 'healthy', 'error': str(e)}
 
 # Cleanup scheduler when app shuts down
 @atexit.register
