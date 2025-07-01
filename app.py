@@ -89,9 +89,9 @@ def shutdown_scheduler():
     if scheduler.running:
         scheduler.shutdown()
 
-# Vercel serverless function handler
+# Railway production handler
 def handler(request, context):
-    """Handler for Vercel serverless functions"""
+    """Handler for Railway production"""
     with app.app_context():
         return app(request, context)
 

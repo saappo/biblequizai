@@ -1,5 +1,5 @@
 """
-Simple storage solution using Vercel's built-in services
+Simple storage solution using file-based storage
 No external subscriptions needed!
 """
 
@@ -10,7 +10,7 @@ from datetime import datetime
 from typing import Dict, List, Optional
 
 class SimpleStorage:
-    """Simple storage using Vercel KV or file-based storage"""
+    """Simple storage using file-based storage"""
     
     def __init__(self):
         self.use_kv = os.getenv('KV_URL') is not None
@@ -39,8 +39,8 @@ class SimpleStorage:
             return []
     
     def _store_in_kv(self, question_data: Dict) -> bool:
-        """Store in Vercel KV"""
-        # This would use Vercel KV client
+        """Store in file system"""
+        # This uses file-based storage
         # For now, we'll use a simple file-based approach
         return self._store_in_sqlite(question_data)
     
@@ -80,8 +80,8 @@ class SimpleStorage:
         return True
     
     def _get_from_kv(self, difficulty: str = None, limit: int = 10) -> List[Dict]:
-        """Get from Vercel KV"""
-        # This would use Vercel KV client
+        """Get from file system"""
+        # This uses file-based storage
         # For now, we'll use a simple file-based approach
         return self._get_from_sqlite(difficulty, limit)
     

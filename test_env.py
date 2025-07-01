@@ -13,10 +13,11 @@ print(f"BLOB_READ_WRITE_TOKEN: {'✅ Set' if os.getenv('BLOB_READ_WRITE_TOKEN') 
 print(f"OPENAI_API_KEY: {'✅ Set' if os.getenv('OPENAI_API_KEY') else '❌ Not set'}")
 print(f"SECRET_KEY: {'✅ Set' if os.getenv('SECRET_KEY') else '❌ Not set'}")
 
-print("\n=== Testing Blob Storage ===")
+print("\n=== Testing Simple Storage ===")
 try:
-    from vercel_blob_storage import blob_storage
-    print("✅ Blob storage module imported successfully")
+    from simple_storage import SimpleStorage
+    storage = SimpleStorage()
+    print("✅ Simple storage module imported successfully")
     
     # Test storing a question
     test_question = {
@@ -27,14 +28,14 @@ try:
         'difficulty': 'Easy'
     }
     
-    result = blob_storage.store_question(test_question)
+    result = storage.store_question(test_question)
     print(f"✅ Question storage test: {'Success' if result else 'Failed'}")
     
     # Test getting questions
-    questions = blob_storage.get_questions(limit=5)
+    questions = storage.get_questions(limit=5)
     print(f"✅ Question retrieval test: Found {len(questions)} questions")
     
 except Exception as e:
-    print(f"❌ Error testing blob storage: {e}")
+    print(f"❌ Error testing simple storage: {e}")
 
 print("\n=== Test Complete ===") 

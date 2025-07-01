@@ -30,44 +30,75 @@ To run the application in development mode:
 python app.py
 ```
 
-## Production Deployment
+## Railway Deployment
+
+This application is configured for deployment on Railway.
+
+### Quick Deploy
+
+1. **Connect to Railway**:
+   - Go to [Railway.app](https://railway.app)
+   - Connect your GitHub repository
+   - Railway will automatically detect the Python app
+
+2. **Set Environment Variables**:
+   - `SECRET_KEY`: A secure secret key for Flask
+   - `DATABASE_URL`: Railway will provide this automatically
+   - `FLASK_ENV`: Set to `production`
+
+3. **Database Setup**:
+   - Railway will automatically provision a PostgreSQL database
+   - The app will run migrations on first deployment
+
+### Manual Deployment
+
+If you prefer to deploy manually:
+
+1. Install Railway CLI:
+   ```bash
+   npm install -g @railway/cli
+   ```
+
+2. Login and deploy:
+   ```bash
+   railway login
+   railway init
+   railway up
+   ```
+
+3. Set environment variables:
+   ```bash
+   railway variables set SECRET_KEY=your-secret-key
+   railway variables set FLASK_ENV=production
+   ```
+
+## Railway Production Features
+
+1. **Automatic HTTPS**: Railway provides SSL certificates automatically
+2. **PostgreSQL Database**: Railway automatically provisions and manages your database
+3. **Background Jobs**: Your question generation cron job will run automatically
+4. **Auto-scaling**: Railway handles scaling based on traffic
+5. **Monitoring**: Built-in logging and monitoring through Railway dashboard
+
+## Local Development
+
+To run the application locally:
 
 1. Set up environment variables:
-   - Create a `.env` file based on `.env.example`
-   - Update the `SECRET_KEY` with a secure value
-   - Configure `DATABASE_URL` for your production database
-
-2. Install Gunicorn:
    ```bash
-   pip install gunicorn
+   cp env.example .env
+   # Edit .env with your local settings
    ```
 
-3. Run with Gunicorn:
+2. Run the application:
    ```bash
-   gunicorn -c gunicorn_config.py "app:create_app('production')"
+   python app.py
    ```
 
-## Production Considerations
-
-1. **Security**:
-   - Use HTTPS in production
-   - Keep your SECRET_KEY secure
-   - Regularly update dependencies
-
-2. **Database**:
-   - Consider using a production-grade database (PostgreSQL recommended)
-   - Set up regular backups
-   - Monitor database performance
-
-3. **Monitoring**:
-   - Set up logging to a proper logging service
-   - Monitor server resources
-   - Set up error tracking
-
-4. **Scaling**:
-   - Use a load balancer for multiple instances
-   - Consider using a CDN for static files
-   - Implement caching where appropriate
+3. For production-like testing:
+   ```bash
+   gunicorn app:app --bind 0.0.0.0:5000
+   ```
 
 ## License
 
