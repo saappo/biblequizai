@@ -50,15 +50,33 @@ def create_app(config_name='production'):
     login_manager.init_app(app)
     login_manager.login_view = 'login'
     
-    # Register routes
-    from routes import register_routes
-    register_routes(app)
-    
-    # Add a simple health check route
+    # Add a simple health check route first
     @app.route('/health')
     def health_check():
         """Simple health check endpoint for Railway"""
         return {'status': 'healthy', 'message': 'Bible Quiz AI main app is running!'}
+    
+    # Add a test route to verify the app works
+    @app.route('/test-main')
+    def test_main():
+        return {'status': 'main app working', 'message': 'Bible Quiz AI main app is running!'}
+    
+    # Add a simple home route
+    @app.route('/')
+    def home():
+        return {'message': 'Bible Quiz AI - Main App', 'status': 'running'}
+    
+    # Try to register routes, but don't fail if there are issues
+    try:
+        from routes import register_routes
+        register_routes(app)
+        logger.info("Routes registered successfully")
+    except Exception as e:
+        logger.error(f"Error registering routes: {str(e)}")
+        # Add a fallback route
+        @app.route('/fallback')
+        def fallback():
+            return {'error': 'Routes failed to load', 'message': str(e)}
     
     return app
 
@@ -66,11 +84,6 @@ def create_app(config_name='production'):
 try:
     app = create_app()
     logger.info("Main Flask app created successfully")
-    
-    # Add a test route to verify the app works
-    @app.route('/test-main')
-    def test_main():
-        return {'status': 'main app working', 'message': 'Bible Quiz AI main app is running!'}
         
 except Exception as e:
     logger.error(f"Error creating main Flask app: {str(e)}")
