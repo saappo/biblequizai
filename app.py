@@ -44,6 +44,9 @@ migrate = Migrate()
 login_manager = LoginManager()
 scheduler = BackgroundScheduler()
 
+# Global variable to track if scheduler is running
+scheduler_running = False
+
 def create_app(config_name='default'):
     """Create and configure the Flask application"""
     app = Flask(__name__)
@@ -68,23 +71,29 @@ def create_app(config_name='default'):
     login_manager.login_view = 'login'
     
     # Initialize scheduler (only in development)
-    if os.getenv('FLASK_ENV') != 'production':
-        def init_scheduler():
-            try:
-                scheduler.add_job(
-                    func=lambda: generate_daily_questions(),
-                    trigger=CronTrigger(hour=1, minute=0),
-                    id='generate_daily_questions',
-                    name='Generate daily Bible quiz questions',
-                    replace_existing=True
-                )
-                scheduler.start()
-                logger.info("Scheduler started successfully")
-            except Exception as e:
-                logger.error(f"Error starting scheduler: {str(e)}")
-        
-        with app.app_context():
-            init_scheduler()
+    global scheduler_running
+    if os.getenv('FLASK_ENV') != 'production' and not scheduler_running:
+        try:
+            def init_scheduler():
+                try:
+                    scheduler.add_job(
+                        func=lambda: generate_daily_questions(),
+                        trigger=CronTrigger(hour=1, minute=0),
+                        id='generate_daily_questions',
+                        name='Generate daily Bible quiz questions',
+                        replace_existing=True
+                    )
+                    scheduler.start()
+                    logger.info("Scheduler started successfully")
+                    global scheduler_running
+                    scheduler_running = True
+                except Exception as e:
+                    logger.error(f"Error starting scheduler: {str(e)}")
+            
+            with app.app_context():
+                init_scheduler()
+        except Exception as e:
+            logger.error(f"Error initializing scheduler: {str(e)}")
     else:
         # In production, we'll use Railway's cron jobs instead
         logger.info("Running in production mode - scheduler disabled")
@@ -96,7 +105,18 @@ def create_app(config_name='default'):
     return app
 
 # Create the application instance
-app = create_app()
+try:
+    app = create_app()
+    logger.info("Flask app created successfully")
+except Exception as e:
+    logger.error(f"Error creating Flask app: {str(e)}")
+    # Create a minimal app for error handling
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'fallback-key'
+    
+    @app.route('/')
+    def fallback():
+        return {'error': 'App initialization failed', 'message': str(e)}, 500
 
 # Cleanup scheduler when app shuts down
 @atexit.register
