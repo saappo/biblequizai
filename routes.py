@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash, session, jsonify, make_response, get_flashed_messages
-from flask_login import login_required, current_user
+from flask_login import login_required, current_user, login_user, AnonymousUserMixin
 from models import User, Quiz, Question, UserResponse, Suggestion, db, ContactMessage
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
@@ -143,6 +143,10 @@ SAMPLE_QUESTIONS = {
         }
     ]
 }
+
+class GuestUser(AnonymousUserMixin):
+    is_guest = True
+    username = "Guest"
 
 def register_routes(app):
     @app.route('/')
@@ -598,4 +602,12 @@ def register_routes(app):
         # Clear any existing flash messages before rendering the contact form
         get_flashed_messages()
         
-        return render_template('contact.html') 
+        return render_template('contact.html')
+
+    @app.route('/play-as-guest')
+    def play_as_guest():
+        guest = User(username="Guest", is_guest=True)
+        db.session.add(guest)
+        db.session.commit()
+        login_user(guest)
+        return redirect(url_for('quiz')) 

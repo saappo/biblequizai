@@ -131,6 +131,10 @@
         </div>
     </div>
 
+    <button data-bs-toggle="modal" data-bs-target="#authModal">Sign In</button>
+    <button data-bs-toggle="modal" data-bs-target="#authModal" onclick="setAuthMode('signup')">Create Account</button>
+    <a href="{{ url_for('play_as_guest') }}" class="btn btn-secondary">Play as Guest</a>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html> 

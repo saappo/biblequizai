@@ -147,6 +147,15 @@
             <a href="{{ url_for('welcome') }}" class="btn btn-primary">Try Another Quiz</a>
             <a href="{{ url_for('contact') }}" class="btn btn-secondary">Contact Us</a>
         </div>
+
+        {% if current_user.is_authenticated and not current_user.is_guest %}
+            <!-- Show stats, leaderboard, etc. -->
+        {% else %}
+            <div class="alert alert-info mt-4">
+                <strong>Want to save your score and track your streak?</strong>
+                <button data-bs-toggle="modal" data-bs-target="#authModal" class="btn btn-primary ms-2">Create an Account</button>
+            </div>
+        {% endif %}
     </div>
 
     <footer class="logo-container">
