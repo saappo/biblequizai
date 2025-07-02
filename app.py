@@ -104,7 +104,7 @@ def create_app(config_name='default'):
     
     # Add a simple root route for Railway
     @app.route('/')
-    def home():
+    def root_status():
         return {'message': 'Bible Quiz AI is running!', 'status': 'success', 'version': 'full-app'}
     
     return app
@@ -124,14 +124,15 @@ except Exception as e:
     # Create a minimal app for error handling
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'fallback-key'
+    error_message = str(e)
     
     @app.route('/')
     def fallback():
-        return {'error': 'App initialization failed', 'message': str(e)}, 500
+        return {'error': 'App initialization failed', 'message': error_message}, 500
     
     @app.route('/health')
     def health():
-        return {'status': 'healthy', 'error': str(e)}
+        return {'status': 'healthy', 'error': error_message}
 
 # Cleanup scheduler when app shuts down
 @atexit.register
