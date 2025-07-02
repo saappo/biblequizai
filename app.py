@@ -1,60 +1,39 @@
 import os
-from flask import Flask, jsonify, render_template, request, redirect, url_for
-from datetime import datetime
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from models import db, User
+from routes import register_routes
+from config import Config
 
-# Create Flask app
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-please-change-in-production')
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(config_class)
+    
+    # Initialize extensions
+    db.init_app(app)
+    
+    # Initialize Flask-Login
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'login'
+    login_manager.login_message = 'Please log in to access this page.'
+    
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+    
+    # Register routes
+    register_routes(app)
+    
+    # Create database tables
+    with app.app_context():
+        db.create_all()
+    
+    return app
 
-# Root route with improved HTML response
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-# Health check route for Render
-@app.route('/health')
-def health():
-    return jsonify({
-        'status': 'healthy',
-        'message': 'Bible Quiz AI is running on Render!',
-        'timestamp': datetime.utcnow().isoformat(),
-        'environment': os.environ.get('RENDER_ENVIRONMENT', 'development')
-    })
-
-# Test route
-@app.route('/test')
-def test():
-    return jsonify({
-        'status': 'working',
-        'message': 'Test endpoint is working on Render!',
-        'timestamp': datetime.utcnow().isoformat()
-    })
-
-# API routes
-@app.route('/api/quiz/<difficulty>')
-def quiz_api(difficulty):
-    return jsonify({
-        'difficulty': difficulty,
-        'message': f'Quiz API endpoint for {difficulty} difficulty',
-        'status': 'success'
-    })
-
-# Error handlers
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({
-        'error': 'Not Found',
-        'message': 'The requested resource was not found',
-        'status': 404
-    }), 404
-
-@app.errorhandler(500)
-def internal_error(error):
-    return jsonify({
-        'error': 'Internal Server Error',
-        'message': 'Something went wrong on our end',
-        'status': 500
-    }), 500
+# Create the application instance
+app = create_app()
 
 # Explicitly export the app for gunicorn
 application = app

@@ -145,18 +145,14 @@ SAMPLE_QUESTIONS = {
 }
 
 def register_routes(app):
-    @app.login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(int(user_id))
-
     @app.route('/')
     def home():
         return redirect(url_for('welcome'))
 
     @app.route('/health')
     def health_check():
-        """Simple health check endpoint for Railway"""
-        return {'status': 'healthy', 'message': 'Bible Quiz AI is running!'}
+        """Simple health check endpoint for Render"""
+        return {'status': 'healthy', 'message': 'Bible Quiz AI is running on Render!'}
 
     @app.route('/submit', methods=['GET', 'POST'])
     def submit_suggestion():
