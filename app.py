@@ -1,155 +1,35 @@
 import os
-import logging
-from logging.handlers import RotatingFileHandler
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime, timedelta
-import json
-from config import config
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from dotenv import load_dotenv
-from apscheduler.schedulers.background import BackgroundScheduler
-from apscheduler.triggers.cron import CronTrigger
-from flask_migrate import Migrate
-from question_generator import generate_daily_questions
-import atexit
+from flask import Flask, jsonify
 
-# Load environment variables
-load_dotenv()
+# Create a simple Flask app
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'dev-key-please-change'
 
-# Configure logging
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
+# Root route
+@app.route('/')
+def home():
+    return jsonify({
+        'message': 'Bible Quiz AI is running!',
+        'status': 'success',
+        'version': 'minimal-working'
+    })
 
-# Configure logging for Railway (no file handler in production)
-if os.getenv('FLASK_ENV') != 'production':
-    # Create a rotating file handler for development
-    handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=3)
-    handler.setLevel(logging.DEBUG)
-    
-    # Create a formatter
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    handler.setFormatter(formatter)
-    
-    # Add the handler to the logger
-    logger.addHandler(handler)
-else:
-    # In production, just use console logging
-    logging.basicConfig(level=logging.INFO)
+# Health check route for Railway
+@app.route('/health')
+def health():
+    return jsonify({
+        'status': 'healthy',
+        'message': 'Bible Quiz AI is running!'
+    })
 
-# Initialize extensions
-db = SQLAlchemy()
-migrate = Migrate()
-login_manager = LoginManager()
-scheduler = BackgroundScheduler()
-
-# Global variable to track if scheduler is running
-scheduler_running = False
-
-def create_app(config_name='default'):
-    """Create and configure the Flask application"""
-    app = Flask(__name__)
-    
-    # Load configuration
-    app.config.from_object(config[config_name])
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key-please-change')
-    
-    # Handle Railway PostgreSQL URL conversion
-    database_url = os.getenv('DATABASE_URL', 'sqlite:///biblequiz.db')
-    if database_url.startswith('postgres://'):
-        database_url = database_url.replace('postgres://', 'postgresql://', 1)
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-    
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['TEMPLATES_AUTO_RELOAD'] = True
-    
-    # Initialize extensions with app
-    db.init_app(app)
-    migrate.init_app(app, db)
-    login_manager.init_app(app)
-    login_manager.login_view = 'login'
-    
-    # Initialize scheduler (only in development)
-    global scheduler_running
-    if os.getenv('FLASK_ENV') != 'production' and not scheduler_running:
-        try:
-            def init_scheduler():
-                try:
-                    scheduler.add_job(
-                        func=lambda: generate_daily_questions(),
-                        trigger=CronTrigger(hour=1, minute=0),
-                        id='generate_daily_questions',
-                        name='Generate daily Bible quiz questions',
-                        replace_existing=True
-                    )
-                    scheduler.start()
-                    logger.info("Scheduler started successfully")
-                    global scheduler_running
-                    scheduler_running = True
-                except Exception as e:
-                    logger.error(f"Error starting scheduler: {str(e)}")
-            
-            with app.app_context():
-                init_scheduler()
-        except Exception as e:
-            logger.error(f"Error initializing scheduler: {str(e)}")
-    else:
-        # In production, we'll use Railway's cron jobs instead
-        logger.info("Running in production mode - scheduler disabled")
-    
-    # Register routes
-    from routes import register_routes
-    register_routes(app)
-    
-    # Add a simple root route for Railway
-    @app.route('/')
-    def root_status():
-        return {'message': 'Bible Quiz AI is running!', 'status': 'success', 'version': 'full-app'}
-    
-    # Add health check route for Railway
-    @app.route('/health')
-    def health_check():
-        return {'status': 'healthy', 'message': 'Bible Quiz AI is running!', 'version': '1.0.1'}
-    
-    return app
-
-# Create the application instance
-try:
-    app = create_app()
-    logger.info("Flask app created successfully")
-    
-    # Add a simple test route to verify the app works
-    @app.route('/test-app')
-    def test_app():
-        return {'status': 'main app working', 'message': 'Bible Quiz AI is running!'}
-        
-except Exception as e:
-    logger.error(f"Error creating Flask app: {str(e)}")
-    # Create a minimal app for error handling
-    app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'fallback-key'
-    error_message = str(e)
-    
-    @app.route('/')
-    def fallback():
-        return {'error': 'App initialization failed', 'message': error_message}, 500
-    
-    @app.route('/health')
-    def health():
-        return {'status': 'healthy', 'error': error_message}, 200
-
-# Cleanup scheduler when app shuts down
-@atexit.register
-def shutdown_scheduler():
-    if scheduler.running:
-        scheduler.shutdown()
-
-# Railway production handler
-def handler(request, context):
-    """Handler for Railway production"""
-    with app.app_context():
-        return app(request, context)
+# Test route
+@app.route('/test')
+def test():
+    return jsonify({
+        'status': 'working',
+        'message': 'Test endpoint is working!'
+    })
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True) 
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False) 
