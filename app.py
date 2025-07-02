@@ -110,7 +110,7 @@ def create_app(config_name='default'):
     # Add health check route for Railway
     @app.route('/health')
     def health_check():
-        return {'status': 'healthy', 'message': 'Bible Quiz AI is running!'}
+        return {'status': 'healthy', 'message': 'Bible Quiz AI is running!', 'version': '1.0.1'}
     
     return app
 
@@ -137,7 +137,7 @@ except Exception as e:
     
     @app.route('/health')
     def health():
-        return {'status': 'healthy', 'error': error_message}
+        return {'status': 'healthy', 'error': error_message}, 200
 
 # Cleanup scheduler when app shuts down
 @atexit.register
