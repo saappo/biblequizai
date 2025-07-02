@@ -107,6 +107,11 @@ def create_app(config_name='default'):
     def root_status():
         return {'message': 'Bible Quiz AI is running!', 'status': 'success', 'version': 'full-app'}
     
+    # Add health check route for Railway
+    @app.route('/health')
+    def health_check():
+        return {'status': 'healthy', 'message': 'Bible Quiz AI is running!'}
+    
     return app
 
 # Create the application instance
