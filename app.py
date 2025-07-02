@@ -102,6 +102,11 @@ def create_app(config_name='default'):
     from routes import register_routes
     register_routes(app)
     
+    # Add a simple root route for Railway
+    @app.route('/')
+    def home():
+        return {'message': 'Bible Quiz AI is running!', 'status': 'success', 'version': 'full-app'}
+    
     return app
 
 # Create the application instance
