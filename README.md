@@ -1,6 +1,6 @@
-# Bible Quiz Application
+# Bible Quiz AI
 
-A Flask-based Bible quiz application with multiple difficulty levels and user interaction features.
+A Flask-based Bible quiz application with multiple difficulty levels and user interaction features, deployed on Render.
 
 ## Features
 
@@ -9,6 +9,8 @@ A Flask-based Bible quiz application with multiple difficulty levels and user in
 - Score tracking
 - Contact form
 - Mobile-responsive design
+- AI-powered question generation
+- RESTful API endpoints
 
 ## Installation
 
@@ -30,55 +32,63 @@ To run the application in development mode:
 python app.py
 ```
 
-## Railway Deployment
+## Render Deployment
 
-This application is configured for deployment on Railway.
+This application is configured for deployment on Render.
 
 ### Quick Deploy
 
-1. **Connect to Railway**:
-   - Go to [Railway.app](https://railway.app)
+1. **Connect to Render**:
+   - Go to [Render.com](https://render.com)
+   - Sign up/Login and click "New +" → "Web Service"
    - Connect your GitHub repository
-   - Railway will automatically detect the Python app
+   - Render will automatically detect the Python app
 
-2. **Set Environment Variables**:
+2. **Configure the Service**:
+   - **Name**: `bible-quiz-ai` (or your preferred name)
+   - **Environment**: `Python 3`
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1`
+   - **Plan**: Free (or choose a paid plan for better performance)
+
+3. **Set Environment Variables** (Optional):
    - `SECRET_KEY`: A secure secret key for Flask
-   - `DATABASE_URL`: Railway will provide this automatically
    - `FLASK_ENV`: Set to `production`
 
-3. **Database Setup**:
-   - Railway will automatically provision a PostgreSQL database
-   - The app will run migrations on first deployment
+4. **Deploy**:
+   - Click "Create Web Service"
+   - Render will automatically build and deploy your application
 
 ### Manual Deployment
 
 If you prefer to deploy manually:
 
-1. Install Railway CLI:
+1. Install Render CLI:
    ```bash
-   npm install -g @railway/cli
+   npm install -g @render/cli
    ```
 
 2. Login and deploy:
    ```bash
-   railway login
-   railway init
-   railway up
+   render login
+   render deploy
    ```
 
-3. Set environment variables:
-   ```bash
-   railway variables set SECRET_KEY=your-secret-key
-   railway variables set FLASK_ENV=production
-   ```
+## Render Production Features
 
-## Railway Production Features
+1. **Automatic HTTPS**: Render provides SSL certificates automatically
+2. **Auto-scaling**: Render handles scaling based on traffic
+3. **Health Checks**: Built-in health monitoring at `/health` endpoint
+4. **Logging**: Comprehensive logging through Render dashboard
+5. **Custom Domains**: Easy custom domain setup
+6. **Environment Variables**: Secure environment variable management
 
-1. **Automatic HTTPS**: Railway provides SSL certificates automatically
-2. **PostgreSQL Database**: Railway automatically provisions and manages your database
-3. **Background Jobs**: Your question generation cron job will run automatically
-4. **Auto-scaling**: Railway handles scaling based on traffic
-5. **Monitoring**: Built-in logging and monitoring through Railway dashboard
+## API Endpoints
+
+- `/` - Main application page
+- `/health` - Health check endpoint
+- `/test` - Test API endpoint
+- `/api/quiz/<difficulty>` - Quiz API endpoints (Easy, Medium, Hard)
 
 ## Local Development
 
@@ -99,6 +109,28 @@ To run the application locally:
    ```bash
    gunicorn app:app --bind 0.0.0.0:5000
    ```
+
+## Project Structure
+
+```
+BibleQuizAI/
+├── app.py                 # Main Flask application
+├── requirements.txt       # Python dependencies
+├── render.yaml           # Render deployment configuration
+├── Procfile             # Process file for web servers
+├── templates/           # HTML templates
+│   └── index.html      # Main application page
+├── static/             # Static files (CSS, JS, images)
+└── api/               # API-specific files
+    └── index.py       # API handler
+```
+
+## Troubleshooting
+
+- Check the logs in the Render dashboard for any build or runtime errors
+- Ensure all dependencies are listed in `requirements.txt`
+- Verify the start command matches your application structure
+- The health check endpoint at `/health` should return a 200 status
 
 ## License
 

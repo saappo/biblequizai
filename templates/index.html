@@ -1,83 +1,136 @@
-{% extends "base.html" %}
-
-{% block title %}Keep Alley Trash - Home{% endblock %}
-
-{% block content %}
-<!-- Hero Section -->
-<div class="row justify-content-center mb-5">
-    <div class="col-md-10 text-center">
-        <h1 class="display-4 mb-4">Keep Our Alleys Clean</h1>
-        <p class="lead mb-4">Join our community in making our neighborhoods cleaner and more beautiful. Together, we can make a difference.</p>
-        <a href="{{ url_for('submit_suggestion') }}" class="btn btn-primary btn-lg">Submit a Suggestion</a>
-    </div>
-</div>
-
-<!-- Features Section -->
-<div class="row g-4 mb-5">
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body text-center">
-                <i class="bi bi-lightbulb display-4 text-primary mb-3"></i>
-                <h3 class="h4">Share Ideas</h3>
-                <p class="card-text">Submit your suggestions for improving our community's cleanliness and maintenance.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bible Quiz AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .hero-section {
+            padding: 80px 0;
+            color: white;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .btn-quiz {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-quiz:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .difficulty-badge {
+            font-size: 0.8rem;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+        .easy { background-color: #28a745; }
+        .medium { background-color: #ffc107; color: #000; }
+        .hard { background-color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-section text-center">
+            <h1 class="display-3 mb-4">
+                <i class="fas fa-cross text-warning me-3"></i>
+                Bible Quiz AI
+            </h1>
+            <p class="lead mb-5">Test your knowledge of the Bible with our AI-powered quiz system</p>
+            <div class="alert alert-success" role="alert">
+                <i class="fas fa-check-circle me-2"></i>
+                Successfully deployed on Render!
             </div>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body text-center">
-                <i class="bi bi-people display-4 text-primary mb-3"></i>
-                <h3 class="h4">Community Driven</h3>
-                <p class="card-text">Work together with neighbors to identify and address areas that need attention.</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card h-100">
-            <div class="card-body text-center">
-                <i class="bi bi-check-circle display-4 text-primary mb-3"></i>
-                <h3 class="h4">Make an Impact</h3>
-                <p class="card-text">See your suggestions come to life as we work to implement approved improvements.</p>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- How It Works Section -->
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <h2 class="text-center mb-4">How It Works</h2>
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex mb-4">
-                    <div class="flex-shrink-0">
-                        <span class="badge bg-primary rounded-circle p-3">1</span>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <h4 class="h5">Submit Your Suggestion</h4>
-                        <p class="mb-0">Fill out our simple form with details about your suggestion, including location and description.</p>
+        <!-- Quiz Options -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body text-center p-5">
+                        <h2 class="mb-4">Choose Your Difficulty</h2>
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <span class="badge difficulty-badge easy mb-3">Easy</span>
+                                        <h5 class="card-title">Beginner</h5>
+                                        <p class="card-text">Perfect for those new to Bible study</p>
+                                        <a href="/api/quiz/Easy" class="btn btn-quiz btn-success">
+                                            <i class="fas fa-play me-2"></i>Start Quiz
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <span class="badge difficulty-badge medium mb-3">Medium</span>
+                                        <h5 class="card-title">Intermediate</h5>
+                                        <p class="card-text">For those with some Bible knowledge</p>
+                                        <a href="/api/quiz/Medium" class="btn btn-quiz btn-warning">
+                                            <i class="fas fa-play me-2"></i>Start Quiz
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <span class="badge difficulty-badge hard mb-3">Hard</span>
+                                        <h5 class="card-title">Expert</h5>
+                                        <p class="card-text">Challenge yourself with advanced questions</p>
+                                        <a href="/api/quiz/Hard" class="btn btn-quiz btn-danger">
+                                            <i class="fas fa-play me-2"></i>Start Quiz
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="d-flex mb-4">
-                    <div class="flex-shrink-0">
-                        <span class="badge bg-primary rounded-circle p-3">2</span>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <h4 class="h5">Community Review</h4>
-                        <p class="mb-0">Your suggestion will be reviewed and considered by our community team.</p>
-                    </div>
-                </div>
-                <div class="d-flex">
-                    <div class="flex-shrink-0">
-                        <span class="badge bg-primary rounded-circle p-3">3</span>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <h4 class="h5">Implementation</h4>
-                        <p class="mb-0">Approved suggestions will be implemented, and you'll be notified of the progress.</p>
+            </div>
+        </div>
+
+        <!-- API Test Section -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h3 class="mb-4">API Endpoints</h3>
+                        <div class="d-grid gap-2">
+                            <a href="/test" class="btn btn-outline-primary">
+                                <i class="fas fa-vial me-2"></i>Test API
+                            </a>
+                            <a href="/health" class="btn btn-outline-success">
+                                <i class="fas fa-heartbeat me-2"></i>Health Check
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock %} 
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
