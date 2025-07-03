@@ -90,6 +90,574 @@ SAMPLE_QUESTIONS = {
             'category': 'General',
             'explanation': 'The New Testament contains 27 books, from Matthew to Revelation.',
             'reference': 'https://www.biblegateway.com/passage/?search=Matthew+1&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to die in the Bible?',
+            'options': ['Abel', 'Cain', 'Adam', 'Eve'],
+            'correct_answer': 'Abel',
+            'category': 'Old Testament',
+            'explanation': 'Abel was killed by his brother Cain, making him the first person to die. (Genesis 4:8)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Genesis+4%3A8&version=NIV'
+        },
+        {
+            'text': 'What was the name of the garden where Adam and Eve lived?',
+            'options': ['Garden of Eden', 'Garden of Gethsemane', 'Garden of Paradise', 'Garden of Heaven'],
+            'correct_answer': 'Garden of Eden',
+            'category': 'Old Testament',
+            'explanation': 'Adam and Eve lived in the Garden of Eden until they disobeyed God. (Genesis 2:8)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Genesis+2%3A8&version=NIV'
+        },
+        {
+            'text': 'Who was the father of Isaac?',
+            'options': ['Abraham', 'Noah', 'Moses', 'David'],
+            'correct_answer': 'Abraham',
+            'category': 'Old Testament',
+            'explanation': 'Abraham was the father of Isaac, the child of promise. (Genesis 21:1-3)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Genesis+21%3A1-3&version=NIV'
+        },
+        {
+            'text': 'What was the name of Isaac\'s wife?',
+            'options': ['Rebecca', 'Sarah', 'Rachel', 'Leah'],
+            'correct_answer': 'Rebecca',
+            'category': 'Old Testament',
+            'explanation': 'Rebecca became Isaac\'s wife and the mother of Jacob and Esau. (Genesis 24:67)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Genesis+24%3A67&version=NIV'
+        },
+        {
+            'text': 'Who was the father of Jacob?',
+            'options': ['Isaac', 'Abraham', 'Noah', 'Moses'],
+            'correct_answer': 'Isaac',
+            'category': 'Old Testament',
+            'explanation': 'Isaac was the father of Jacob, who later became Israel. (Genesis 25:24-26)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Genesis+25%3A24-26&version=NIV'
+        },
+        {
+            'text': 'How many sons did Jacob have?',
+            'options': ['10', '11', '12', '13'],
+            'correct_answer': '12',
+            'category': 'Old Testament',
+            'explanation': 'Jacob had 12 sons who became the fathers of the 12 tribes of Israel. (Genesis 35:22-26)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Genesis+35%3A22-26&version=NIV'
+        },
+        {
+            'text': 'Who was sold into slavery by his brothers?',
+            'options': ['Joseph', 'Benjamin', 'Judah', 'Reuben'],
+            'correct_answer': 'Joseph',
+            'category': 'Old Testament',
+            'explanation': 'Joseph was sold into slavery by his jealous brothers. (Genesis 37:28)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Genesis+37%3A28&version=NIV'
+        },
+        {
+            'text': 'Who was the baby found in a basket in the river?',
+            'options': ['Moses', 'Aaron', 'Joshua', 'Caleb'],
+            'correct_answer': 'Moses',
+            'category': 'Old Testament',
+            'explanation': 'Moses was found in a basket in the Nile River by Pharaoh\'s daughter. (Exodus 2:1-10)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Exodus+2%3A1-10&version=NIV'
+        },
+        {
+            'text': 'What was the name of Moses\' brother?',
+            'options': ['Aaron', 'Joshua', 'Caleb', 'Miriam'],
+            'correct_answer': 'Aaron',
+            'category': 'Old Testament',
+            'explanation': 'Aaron was Moses\' brother and the first high priest of Israel. (Exodus 4:14)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Exodus+4%3A14&version=NIV'
+        },
+        {
+            'text': 'How many plagues did God send on Egypt?',
+            'options': ['7', '9', '10', '12'],
+            'correct_answer': '10',
+            'category': 'Old Testament',
+            'explanation': 'God sent 10 plagues on Egypt to convince Pharaoh to let the Israelites go. (Exodus 7-12)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Exodus+7-12&version=NIV'
+        },
+        {
+            'text': 'What was the first plague?',
+            'options': ['Water to blood', 'Frogs', 'Gnats', 'Flies'],
+            'correct_answer': 'Water to blood',
+            'category': 'Old Testament',
+            'explanation': 'The first plague was turning the Nile River water into blood. (Exodus 7:14-24)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Exodus+7%3A14-24&version=NIV'
+        },
+        {
+            'text': 'Who was the first king of Israel after Saul?',
+            'options': ['David', 'Solomon', 'Samuel', 'Jonathan'],
+            'correct_answer': 'David',
+            'category': 'Old Testament',
+            'explanation': 'David became king after Saul and was known as a man after God\'s own heart. (1 Samuel 16:13)',
+            'reference': 'https://www.biblegateway.com/passage/?search=1+Samuel+16%3A13&version=NIV'
+        },
+        {
+            'text': 'Who was David\'s son who became king?',
+            'options': ['Solomon', 'Absalom', 'Adonijah', 'Amnon'],
+            'correct_answer': 'Solomon',
+            'category': 'Old Testament',
+            'explanation': 'Solomon was David\'s son who became king and was known for his wisdom. (1 Kings 1:39)',
+            'reference': 'https://www.biblegateway.com/passage/?search=1+Kings+1%3A39&version=NIV'
+        },
+        {
+            'text': 'Who built the first temple in Jerusalem?',
+            'options': ['Solomon', 'David', 'Hezekiah', 'Josiah'],
+            'correct_answer': 'Solomon',
+            'category': 'Old Testament',
+            'explanation': 'Solomon built the first temple in Jerusalem for the worship of God. (1 Kings 6:1)',
+            'reference': 'https://www.biblegateway.com/passage/?search=1+Kings+6%3A1&version=NIV'
+        },
+        {
+            'text': 'Who was the prophet who was swallowed by a big fish?',
+            'options': ['Jonah', 'Elijah', 'Elisha', 'Isaiah'],
+            'correct_answer': 'Jonah',
+            'category': 'Old Testament',
+            'explanation': 'Jonah was swallowed by a great fish when he tried to run from God. (Jonah 1:17)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Jonah+1%3A17&version=NIV'
+        },
+        {
+            'text': 'Who was the prophet who was taken to heaven in a chariot?',
+            'options': ['Elijah', 'Elisha', 'Isaiah', 'Jeremiah'],
+            'correct_answer': 'Elijah',
+            'category': 'Old Testament',
+            'explanation': 'Elijah was taken up to heaven in a whirlwind with a chariot of fire. (2 Kings 2:11)',
+            'reference': 'https://www.biblegateway.com/passage/?search=2+Kings+2%3A11&version=NIV'
+        },
+        {
+            'text': 'Who was the prophet who was thrown into a fiery furnace?',
+            'options': ['Shadrach, Meshach, and Abednego', 'Daniel', 'Jeremiah', 'Ezekiel'],
+            'correct_answer': 'Shadrach, Meshach, and Abednego',
+            'category': 'Old Testament',
+            'explanation': 'Shadrach, Meshach, and Abednego were thrown into a fiery furnace but God protected them. (Daniel 3:20-25)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Daniel+3%3A20-25&version=NIV'
+        },
+        {
+            'text': 'Who was the angel who appeared to Mary?',
+            'options': ['Gabriel', 'Michael', 'Raphael', 'Uriel'],
+            'correct_answer': 'Gabriel',
+            'category': 'New Testament',
+            'explanation': 'The angel Gabriel appeared to Mary to tell her she would give birth to Jesus. (Luke 1:26-38)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Luke+1%3A26-38&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to see the baby Jesus?',
+            'options': ['The shepherds', 'The wise men', 'Simeon', 'Anna'],
+            'correct_answer': 'The shepherds',
+            'category': 'New Testament',
+            'explanation': 'The shepherds were the first to see the baby Jesus after the angels told them. (Luke 2:8-20)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Luke+2%3A8-20&version=NIV'
+        },
+        {
+            'text': 'Who were the first people to visit Jesus after His birth?',
+            'options': ['The wise men', 'The shepherds', 'Simeon and Anna', 'Herod'],
+            'correct_answer': 'The wise men',
+            'category': 'New Testament',
+            'explanation': 'The wise men from the east came to visit Jesus and brought gifts. (Matthew 2:1-12)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+2%3A1-12&version=NIV'
+        },
+        {
+            'text': 'What gifts did the wise men bring to Jesus?',
+            'options': ['Gold, frankincense, and myrrh', 'Silver, gold, and jewels', 'Food, water, and clothes', 'Books, scrolls, and oil'],
+            'correct_answer': 'Gold, frankincense, and myrrh',
+            'category': 'New Testament',
+            'explanation': 'The wise men brought gold, frankincense, and myrrh as gifts to Jesus. (Matthew 2:11)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+2%3A11&version=NIV'
+        },
+        {
+            'text': 'Who was Jesus\' earthly father?',
+            'options': ['Joseph', 'God', 'David', 'Abraham'],
+            'correct_answer': 'Joseph',
+            'category': 'New Testament',
+            'explanation': 'Joseph was Jesus\' earthly father, though Jesus was conceived by the Holy Spirit. (Matthew 1:18-25)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+1%3A18-25&version=NIV'
+        },
+        {
+            'text': 'Who was the first disciple Jesus called?',
+            'options': ['Andrew', 'Peter', 'John', 'James'],
+            'correct_answer': 'Andrew',
+            'category': 'New Testament',
+            'explanation': 'Andrew was the first disciple Jesus called, and he brought his brother Peter to Jesus. (John 1:35-42)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+1%3A35-42&version=NIV'
+        },
+        {
+            'text': 'Who was the disciple who betrayed Jesus?',
+            'options': ['Judas Iscariot', 'Peter', 'Thomas', 'Philip'],
+            'correct_answer': 'Judas Iscariot',
+            'category': 'New Testament',
+            'explanation': 'Judas Iscariot betrayed Jesus for thirty pieces of silver. (Matthew 26:14-16)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+26%3A14-16&version=NIV'
+        },
+        {
+            'text': 'Who was the disciple who doubted Jesus\' resurrection?',
+            'options': ['Thomas', 'Peter', 'John', 'Andrew'],
+            'correct_answer': 'Thomas',
+            'category': 'New Testament',
+            'explanation': 'Thomas doubted Jesus\' resurrection until he saw Jesus with his own eyes. (John 20:24-29)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+20%3A24-29&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to see Jesus after His resurrection?',
+            'options': ['Mary Magdalene', 'Peter', 'John', 'The disciples'],
+            'correct_answer': 'Mary Magdalene',
+            'category': 'New Testament',
+            'explanation': 'Mary Magdalene was the first person to see Jesus after His resurrection. (John 20:11-18)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+20%3A11-18&version=NIV'
+        },
+        {
+            'text': 'How many people did Jesus feed with 5 loaves and 2 fish?',
+            'options': ['3000', '4000', '5000', '6000'],
+            'correct_answer': '5000',
+            'category': 'New Testament',
+            'explanation': 'Jesus fed 5000 men (plus women and children) with 5 loaves and 2 fish. (Matthew 14:13-21)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+14%3A13-21&version=NIV'
+        },
+        {
+            'text': 'Who was the woman who washed Jesus\' feet with her tears?',
+            'options': ['Mary Magdalene', 'Mary of Bethany', 'A sinful woman', 'The Samaritan woman'],
+            'correct_answer': 'A sinful woman',
+            'category': 'New Testament',
+            'explanation': 'A sinful woman washed Jesus\' feet with her tears and dried them with her hair. (Luke 7:36-50)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Luke+7%3A36-50&version=NIV'
+        },
+        {
+            'text': 'Who was the woman Jesus met at the well?',
+            'options': ['The Samaritan woman', 'Mary Magdalene', 'Mary of Bethany', 'The Canaanite woman'],
+            'correct_answer': 'The Samaritan woman',
+            'category': 'New Testament',
+            'explanation': 'Jesus met a Samaritan woman at the well and told her about living water. (John 4:1-42)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+4%3A1-42&version=NIV'
+        },
+        {
+            'text': 'Who was the man Jesus raised from the dead after 4 days?',
+            'options': ['Lazarus', 'Jairus\' daughter', 'The widow\'s son', 'The centurion\'s servant'],
+            'correct_answer': 'Lazarus',
+            'category': 'New Testament',
+            'explanation': 'Jesus raised Lazarus from the dead after he had been in the tomb for 4 days. (John 11:1-44)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+11%3A1-44&version=NIV'
+        },
+        {
+            'text': 'Who was the Roman governor who sentenced Jesus to death?',
+            'options': ['Pontius Pilate', 'Herod', 'Caiaphas', 'Annas'],
+            'correct_answer': 'Pontius Pilate',
+            'category': 'New Testament',
+            'explanation': 'Pontius Pilate was the Roman governor who sentenced Jesus to death by crucifixion. (Matthew 27:11-26)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+27%3A11-26&version=NIV'
+        },
+        {
+            'text': 'Who was the first Christian martyr?',
+            'options': ['Stephen', 'James', 'Peter', 'Paul'],
+            'correct_answer': 'Stephen',
+            'category': 'New Testament',
+            'explanation': 'Stephen was the first Christian martyr, stoned to death for his faith. (Acts 7:54-60)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Acts+7%3A54-60&version=NIV'
+        },
+        {
+            'text': 'Who was the first Gentile to be baptized?',
+            'options': ['Cornelius', 'Lydia', 'The Ethiopian eunuch', 'The Philippian jailer'],
+            'correct_answer': 'Cornelius',
+            'category': 'New Testament',
+            'explanation': 'Cornelius was the first Gentile to be baptized, showing the gospel was for all people. (Acts 10)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Acts+10&version=NIV'
+        },
+        {
+            'text': 'Who wrote the most books in the New Testament?',
+            'options': ['Paul', 'John', 'Peter', 'Luke'],
+            'correct_answer': 'Paul',
+            'category': 'New Testament',
+            'explanation': 'Paul wrote 13 books of the New Testament, more than any other author.',
+            'reference': 'https://www.biblegateway.com/passage/?search=Romans+1&version=NIV'
+        },
+        {
+            'text': 'How many books are in the entire Bible?',
+            'options': ['66', '73', '77', '81'],
+            'correct_answer': '66',
+            'category': 'General',
+            'explanation': 'The Bible contains 66 books total: 39 in the Old Testament and 27 in the New Testament.',
+            'reference': 'https://www.biblegateway.com/passage/?search=Genesis+1&version=NIV'
+        },
+        {
+            'text': 'What is the shortest verse in the Bible?',
+            'options': ['Jesus wept', 'Rejoice always', 'Pray continually', 'Love one another'],
+            'correct_answer': 'Jesus wept',
+            'category': 'New Testament',
+            'explanation': '"Jesus wept" (John 11:35) is the shortest verse in the Bible.',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+11%3A35&version=NIV'
+        },
+        {
+            'text': 'What is the longest book in the Bible?',
+            'options': ['Psalms', 'Genesis', 'Isaiah', 'Jeremiah'],
+            'correct_answer': 'Psalms',
+            'category': 'Old Testament',
+            'explanation': 'Psalms is the longest book in the Bible with 150 chapters.',
+            'reference': 'https://www.biblegateway.com/passage/?search=Psalms+1&version=NIV'
+        },
+        {
+            'text': 'What is the shortest book in the Bible?',
+            'options': ['2 John', '3 John', 'Jude', 'Philemon'],
+            'correct_answer': '2 John',
+            'category': 'New Testament',
+            'explanation': '2 John is the shortest book in the Bible with only 13 verses.',
+            'reference': 'https://www.biblegateway.com/passage/?search=2+John+1&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be baptized in the New Testament?',
+            'options': ['Jesus', 'John the Baptist', 'Peter', 'Andrew'],
+            'correct_answer': 'Jesus',
+            'category': 'New Testament',
+            'explanation': 'Jesus was baptized by John the Baptist, marking the beginning of His ministry. (Matthew 3:13-17)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+3%3A13-17&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to recognize Jesus as the Messiah?',
+            'options': ['Peter', 'John', 'Andrew', 'Simon'],
+            'correct_answer': 'Peter',
+            'category': 'New Testament',
+            'explanation': 'Peter was the first to recognize Jesus as the Messiah, the Son of the living God. (Matthew 16:16)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+16%3A16&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be healed by Jesus?',
+            'options': ['A leper', 'A blind man', 'A paralyzed man', 'A woman with bleeding'],
+            'correct_answer': 'A leper',
+            'category': 'New Testament',
+            'explanation': 'Jesus healed a leper, which was one of His first recorded healings. (Matthew 8:1-4)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+8%3A1-4&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be raised from the dead by Jesus?',
+            'options': ['Jairus\' daughter', 'The widow\'s son', 'Lazarus', 'The centurion\'s servant'],
+            'correct_answer': 'Jairus\' daughter',
+            'category': 'New Testament',
+            'explanation': 'Jesus raised Jairus\' daughter from the dead, one of His first resurrection miracles. (Mark 5:21-43)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Mark+5%3A21-43&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be called by Jesus to follow Him?',
+            'options': ['Andrew and Simon Peter', 'James and John', 'Philip and Nathanael', 'Matthew'],
+            'correct_answer': 'Andrew and Simon Peter',
+            'category': 'New Testament',
+            'explanation': 'Andrew and Simon Peter were the first disciples called by Jesus to follow Him. (Matthew 4:18-20)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+4%3A18-20&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be sent out by Jesus to preach?',
+            'options': ['The twelve disciples', 'The seventy-two', 'John the Baptist', 'Paul'],
+            'correct_answer': 'The twelve disciples',
+            'category': 'New Testament',
+            'explanation': 'Jesus first sent out the twelve disciples to preach and heal. (Matthew 10:1-15)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+10%3A1-15&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be converted after Jesus\' resurrection?',
+            'options': ['The Ethiopian eunuch', 'Cornelius', 'Saul (Paul)', 'Lydia'],
+            'correct_answer': 'The Ethiopian eunuch',
+            'category': 'New Testament',
+            'explanation': 'The Ethiopian eunuch was one of the first converts after Jesus\' resurrection. (Acts 8:26-40)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Acts+8%3A26-40&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be baptized in the Holy Spirit?',
+            'options': ['The disciples at Pentecost', 'Cornelius', 'The Samaritans', 'The Ephesians'],
+            'correct_answer': 'The disciples at Pentecost',
+            'category': 'New Testament',
+            'explanation': 'The disciples were baptized with the Holy Spirit at Pentecost. (Acts 2:1-4)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Acts+2%3A1-4&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be called a Christian?',
+            'options': ['The disciples in Antioch', 'Paul', 'Peter', 'Barnabas'],
+            'correct_answer': 'The disciples in Antioch',
+            'category': 'New Testament',
+            'explanation': 'The disciples were first called Christians in Antioch. (Acts 11:26)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Acts+11%3A26&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be imprisoned for preaching about Jesus?',
+            'options': ['Peter and John', 'Paul', 'Stephen', 'James'],
+            'correct_answer': 'Peter and John',
+            'category': 'New Testament',
+            'explanation': 'Peter and John were the first to be imprisoned for preaching about Jesus. (Acts 4:1-3)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Acts+4%3A1-3&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be shipwrecked while spreading the gospel?',
+            'options': ['Paul', 'Peter', 'John', 'Barnabas'],
+            'correct_answer': 'Paul',
+            'category': 'New Testament',
+            'explanation': 'Paul experienced shipwrecks while spreading the gospel. (2 Corinthians 11:25)',
+            'reference': 'https://www.biblegateway.com/passage/?search=2+Corinthians+11%3A25&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to write about Jesus\' life?',
+            'options': ['Mark', 'Matthew', 'Luke', 'John'],
+            'correct_answer': 'Mark',
+            'category': 'New Testament',
+            'explanation': 'Mark is believed to be the first to write a Gospel about Jesus\' life.',
+            'reference': 'https://www.biblegateway.com/passage/?search=Mark+1&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to see the risen Jesus?',
+            'options': ['Mary Magdalene', 'Peter', 'John', 'The disciples'],
+            'correct_answer': 'Mary Magdalene',
+            'category': 'New Testament',
+            'explanation': 'Mary Magdalene was the first person to see Jesus after His resurrection. (John 20:11-18)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+20%3A11-18&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be healed on the Sabbath?',
+            'options': ['A man with a withered hand', 'A blind man', 'A paralyzed man', 'A woman with bleeding'],
+            'correct_answer': 'A man with a withered hand',
+            'category': 'New Testament',
+            'explanation': 'Jesus healed a man with a withered hand on the Sabbath. (Mark 3:1-6)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Mark+3%3A1-6&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be called by name by Jesus?',
+            'options': ['Simon Peter', 'Andrew', 'John', 'James'],
+            'correct_answer': 'Simon Peter',
+            'category': 'New Testament',
+            'explanation': 'Jesus called Simon by name and gave him the name Peter. (John 1:42)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+1%3A42&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be given the keys to the kingdom?',
+            'options': ['Peter', 'John', 'James', 'Andrew'],
+            'correct_answer': 'Peter',
+            'category': 'New Testament',
+            'explanation': 'Jesus gave Peter the keys to the kingdom of heaven. (Matthew 16:19)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+16%3A19&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "follow me" by Jesus?',
+            'options': ['Andrew and Simon Peter', 'James and John', 'Philip', 'Matthew'],
+            'correct_answer': 'Andrew and Simon Peter',
+            'category': 'New Testament',
+            'explanation': 'Jesus first said "Follow me" to Andrew and Simon Peter. (Matthew 4:19)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+4%3A19&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be given authority to cast out demons?',
+            'options': ['The twelve disciples', 'The seventy-two', 'Peter', 'Paul'],
+            'correct_answer': 'The twelve disciples',
+            'category': 'New Testament',
+            'explanation': 'Jesus gave the twelve disciples authority to cast out demons. (Matthew 10:1)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+10%3A1&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "go and sin no more"?',
+            'options': ['The woman caught in adultery', 'The paralyzed man', 'The blind man', 'The leper'],
+            'correct_answer': 'The woman caught in adultery',
+            'category': 'New Testament',
+            'explanation': 'Jesus told the woman caught in adultery to "go and sin no more." (John 8:11)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+8%3A11&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "take up your cross"?',
+            'options': ['The disciples', 'Peter', 'John', 'James'],
+            'correct_answer': 'The disciples',
+            'category': 'New Testament',
+            'explanation': 'Jesus told His disciples to take up their cross and follow Him. (Matthew 16:24)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+16%3A24&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "love your enemies"?',
+            'options': ['The disciples', 'The crowds', 'The Pharisees', 'The Sadducees'],
+            'correct_answer': 'The disciples',
+            'category': 'New Testament',
+            'explanation': 'Jesus told His disciples to love their enemies in the Sermon on the Mount. (Matthew 5:44)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+5%3A44&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "turn the other cheek"?',
+            'options': ['The disciples', 'The crowds', 'The Pharisees', 'The Sadducees'],
+            'correct_answer': 'The disciples',
+            'category': 'New Testament',
+            'explanation': 'Jesus told His disciples to turn the other cheek in the Sermon on the Mount. (Matthew 5:39)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+5%3A39&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "pray for those who persecute you"?',
+            'options': ['The disciples', 'The crowds', 'The Pharisees', 'The Sadducees'],
+            'correct_answer': 'The disciples',
+            'category': 'New Testament',
+            'explanation': 'Jesus told His disciples to pray for those who persecute them. (Matthew 5:44)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+5%3A44&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "forgive seventy times seven"?',
+            'options': ['Peter', 'John', 'James', 'Andrew'],
+            'correct_answer': 'Peter',
+            'category': 'New Testament',
+            'explanation': 'Jesus told Peter to forgive seventy times seven times. (Matthew 18:21-22)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+18%3A21-22&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "sell everything and give to the poor"?',
+            'options': ['The rich young ruler', 'Zacchaeus', 'The widow', 'The tax collector'],
+            'correct_answer': 'The rich young ruler',
+            'category': 'New Testament',
+            'explanation': 'Jesus told the rich young ruler to sell everything and give to the poor. (Matthew 19:21)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+19%3A21&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "be born again"?',
+            'options': ['Nicodemus', 'The Samaritan woman', 'The disciples', 'The crowds'],
+            'correct_answer': 'Nicodemus',
+            'category': 'New Testament',
+            'explanation': 'Jesus told Nicodemus that he must be born again. (John 3:3)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+3%3A3&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "drink living water"?',
+            'options': ['The Samaritan woman', 'The disciples', 'The crowds', 'Nicodemus'],
+            'correct_answer': 'The Samaritan woman',
+            'category': 'New Testament',
+            'explanation': 'Jesus told the Samaritan woman about living water. (John 4:10)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+4%3A10&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "eat the bread of life"?',
+            'options': ['The crowds', 'The disciples', 'The Pharisees', 'The Sadducees'],
+            'correct_answer': 'The crowds',
+            'category': 'New Testament',
+            'explanation': 'Jesus told the crowds that He is the bread of life. (John 6:35)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+6%3A35&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "walk in the light"?',
+            'options': ['The disciples', 'The crowds', 'The Pharisees', 'The Sadducees'],
+            'correct_answer': 'The disciples',
+            'category': 'New Testament',
+            'explanation': 'Jesus told His disciples to walk in the light. (John 8:12)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+8%3A12&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "abide in the vine"?',
+            'options': ['The disciples', 'The crowds', 'The Pharisees', 'The Sadducees'],
+            'correct_answer': 'The disciples',
+            'category': 'New Testament',
+            'explanation': 'Jesus told His disciples to abide in Him, the true vine. (John 15:4)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+15%3A4&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "love one another"?',
+            'options': ['The disciples', 'The crowds', 'The Pharisees', 'The Sadducees'],
+            'correct_answer': 'The disciples',
+            'category': 'New Testament',
+            'explanation': 'Jesus told His disciples to love one another as He loved them. (John 13:34)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+13%3A34&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "go and make disciples"?',
+            'options': ['The eleven disciples', 'The crowds', 'The Pharisees', 'The Sadducees'],
+            'correct_answer': 'The eleven disciples',
+            'category': 'New Testament',
+            'explanation': 'Jesus told the eleven disciples to go and make disciples of all nations. (Matthew 28:19)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+28%3A19&version=NIV'
+        },
+        {
+            'text': 'Who was the first person to be told to "wait for the Holy Spirit"?',
+            'options': ['The disciples', 'The crowds', 'The Pharisees', 'The Sadducees'],
+            'correct_answer': 'The disciples',
+            'category': 'New Testament',
+            'explanation': 'Jesus told His disciples to wait for the Holy Spirit in Jerusalem. (Acts 1:4-5)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Acts+1%3A4-5&version=NIV'
         }
     ],
     'Medium': [
@@ -100,6 +668,86 @@ SAMPLE_QUESTIONS = {
             'category': 'Old Testament',
             'explanation': 'Sarah was Abraham\'s wife and the mother of Isaac. (Genesis 17:15-19)',
             'reference': 'https://www.biblegateway.com/passage/?search=Genesis+17%3A15-19&version=NIV'
+        },
+        {
+            'text': "Who interpreted Pharaoh's dreams in Egypt?",
+            'options': ['Joseph', 'Moses', 'Daniel', 'Aaron'],
+            'correct_answer': 'Joseph',
+            'category': 'Old Testament',
+            'explanation': "Joseph interpreted Pharaoh's dreams, predicting seven years of plenty and seven years of famine. (Genesis 41)",
+            'reference': 'https://www.biblegateway.com/passage/?search=Genesis+41&version=NIV'
+        },
+        {
+            'text': "Which prophet confronted King David about his sin with Bathsheba?",
+            'options': ['Nathan', 'Samuel', 'Elijah', 'Elisha'],
+            'correct_answer': 'Nathan',
+            'category': 'Old Testament',
+            'explanation': "Nathan confronted David and told him the parable of the rich man and the poor man. (2 Samuel 12)",
+            'reference': 'https://www.biblegateway.com/passage/?search=2+Samuel+12&version=NIV'
+        },
+        {
+            'text': "Who was the Roman governor who sentenced Jesus to be crucified?",
+            'options': ['Pilate', 'Herod', 'Caesar', 'Felix'],
+            'correct_answer': 'Pilate',
+            'category': 'New Testament',
+            'explanation': "Pontius Pilate was the Roman governor who authorized Jesus' crucifixion. (Matthew 27:24-26)",
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+27%3A24-26&version=NIV'
+        },
+        {
+            'text': "Who wrote the Book of Revelation?",
+            'options': ['John', 'Paul', 'Peter', 'James'],
+            'correct_answer': 'John',
+            'category': 'New Testament',
+            'explanation': "The apostle John wrote the Book of Revelation while exiled on Patmos. (Revelation 1:1,9)",
+            'reference': 'https://www.biblegateway.com/passage/?search=Revelation+1%3A1,9&version=NIV'
+        },
+        {
+            'text': "What was Paul's name before his conversion?",
+            'options': ['Saul', 'Simon', 'Barnabas', 'Silas'],
+            'correct_answer': 'Saul',
+            'category': 'New Testament',
+            'explanation': "Paul was known as Saul before his encounter with Jesus on the road to Damascus. (Acts 9:1-19)",
+            'reference': 'https://www.biblegateway.com/passage/?search=Acts+9%3A1-19&version=NIV'
+        },
+        {
+            'text': "What is the longest chapter in the Bible?",
+            'options': ['Psalm 119', 'Psalm 23', 'Genesis 1', 'Matthew 5'],
+            'correct_answer': 'Psalm 119',
+            'category': 'Old Testament',
+            'explanation': "Psalm 119 is the longest chapter in the Bible with 176 verses.",
+            'reference': 'https://www.biblegateway.com/passage/?search=Psalm+119&version=NIV'
+        },
+        {
+            'text': "Who was the father of King Solomon?",
+            'options': ['David', 'Saul', 'Samuel', 'Jesse'],
+            'correct_answer': 'David',
+            'category': 'Old Testament',
+            'explanation': "King Solomon was the son of King David and Bathsheba. (2 Samuel 12:24)",
+            'reference': 'https://www.biblegateway.com/passage/?search=2+Samuel+12%3A24&version=NIV'
+        },
+        {
+            'text': "What city's walls fell after the Israelites marched around it?",
+            'options': ['Jericho', 'Ai', 'Bethel', 'Jerusalem'],
+            'correct_answer': 'Jericho',
+            'category': 'Old Testament',
+            'explanation': "The walls of Jericho fell after the Israelites marched around them for seven days. (Joshua 6)",
+            'reference': 'https://www.biblegateway.com/passage/?search=Joshua+6&version=NIV'
+        },
+        {
+            'text': "How many people were saved on Noah's Ark?",
+            'options': ['8', '2', '12', '40'],
+            'correct_answer': '8',
+            'category': 'Old Testament',
+            'explanation': "Noah, his wife, his three sons, and their wives (8 people) were saved on the Ark. (Genesis 7:13)",
+            'reference': 'https://www.biblegateway.com/passage/?search=Genesis+7%3A13&version=NIV'
+        },
+        {
+            'text': "Which Gospel contains the Sermon on the Mount?",
+            'options': ['Matthew', 'Mark', 'Luke', 'John'],
+            'correct_answer': 'Matthew',
+            'category': 'New Testament',
+            'explanation': "The Sermon on the Mount is found in Matthew chapters 5-7.",
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+5-7&version=NIV'
         },
         {
             'text': 'How many days was Jonah in the belly of the fish?',
@@ -172,6 +820,86 @@ SAMPLE_QUESTIONS = {
             'category': 'New Testament',
             'explanation': 'Caiaphas was the high priest who led the questioning of Jesus before His crucifixion. (Matthew 26:57-68)',
             'reference': 'https://www.biblegateway.com/passage/?search=Matthew+26%3A57-68&version=NIV'
+        },
+        {
+            'text': "Who interpreted Pharaoh's dreams in Egypt?",
+            'options': ['Joseph', 'Moses', 'Daniel', 'Aaron'],
+            'correct_answer': 'Joseph',
+            'category': 'Old Testament',
+            'explanation': 'Joseph interpreted Pharaoh\'s dreams, predicting seven years of plenty and seven years of famine. (Genesis 41)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Genesis+41&version=NIV'
+        },
+        {
+            'text': 'Which prophet confronted King David about his sin with Bathsheba?',
+            'options': ['Nathan', 'Samuel', 'Elijah', 'Elisha'],
+            'correct_answer': 'Nathan',
+            'category': 'Old Testament',
+            'explanation': 'Nathan confronted David and told him the parable of the rich man and the poor man. (2 Samuel 12)',
+            'reference': 'https://www.biblegateway.com/passage/?search=2+Samuel+12&version=NIV'
+        },
+        {
+            'text': 'Who was the Roman governor who sentenced Jesus to be crucified?',
+            'options': ['Pilate', 'Herod', 'Caesar', 'Felix'],
+            'correct_answer': 'Pilate',
+            'category': 'New Testament',
+            'explanation': 'Pontius Pilate was the Roman governor who authorized Jesus\' crucifixion. (Matthew 27:24-26)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+27%3A24-26&version=NIV'
+        },
+        {
+            'text': 'Who wrote the Book of Revelation?',
+            'options': ['John', 'Paul', 'Peter', 'James'],
+            'correct_answer': 'John',
+            'category': 'New Testament',
+            'explanation': 'The apostle John wrote the Book of Revelation while exiled on Patmos. (Revelation 1:1,9)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Revelation+1%3A1,9&version=NIV'
+        },
+        {
+            'text': "What was Paul's name before his conversion?",
+            'options': ['Saul', 'Simon', 'Barnabas', 'Silas'],
+            'correct_answer': 'Saul',
+            'category': 'New Testament',
+            'explanation': 'Paul was known as Saul before his encounter with Jesus on the road to Damascus. (Acts 9:1-19)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Acts+9%3A1-19&version=NIV'
+        },
+        {
+            'text': 'What is the longest chapter in the Bible?',
+            'options': ['Psalm 119', 'Psalm 23', 'Genesis 1', 'Matthew 5'],
+            'correct_answer': 'Psalm 119',
+            'category': 'Old Testament',
+            'explanation': 'Psalm 119 is the longest chapter in the Bible with 176 verses.',
+            'reference': 'https://www.biblegateway.com/passage/?search=Psalm+119&version=NIV'
+        },
+        {
+            'text': 'Who was the father of King Solomon?',
+            'options': ['David', 'Saul', 'Samuel', 'Jesse'],
+            'correct_answer': 'David',
+            'category': 'Old Testament',
+            'explanation': 'King Solomon was the son of King David and Bathsheba. (2 Samuel 12:24)',
+            'reference': 'https://www.biblegateway.com/passage/?search=2+Samuel+12%3A24&version=NIV'
+        },
+        {
+            'text': 'What city\'s walls fell after the Israelites marched around it?',
+            'options': ['Jericho', 'Ai', 'Bethel', 'Jerusalem'],
+            'correct_answer': 'Jericho',
+            'category': 'Old Testament',
+            'explanation': 'The walls of Jericho fell after the Israelites marched around them for seven days. (Joshua 6)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Joshua+6&version=NIV'
+        },
+        {
+            'text': "How many people were saved on Noah's Ark?",
+            'options': ['8', '2', '12', '40'],
+            'correct_answer': '8',
+            'category': 'Old Testament',
+            'explanation': 'Noah, his wife, his three sons, and their wives (8 people) were saved on the Ark. (Genesis 7:13)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Genesis+7%3A13&version=NIV'
+        },
+        {
+            'text': 'Which Gospel contains the Sermon on the Mount?',
+            'options': ['Matthew', 'Mark', 'Luke', 'John'],
+            'correct_answer': 'Matthew',
+            'category': 'New Testament',
+            'explanation': 'The Sermon on the Mount is found in Matthew chapters 5-7.',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+5-7&version=NIV'
         }
     ],
     'Hard': [
@@ -183,6 +911,166 @@ SAMPLE_QUESTIONS = {
             'explanation': 'The Israelites wandered in the wilderness for 40 years before entering the Promised Land. (Numbers 14:33-34)',
             'reference': 'https://www.biblegateway.com/passage/?search=Numbers+14%3A33-34&version=NIV'
         },
+        {
+            "text": "What is the shortest verse in the Bible?",
+            "options": ["Jesus wept", "God is love", "Rejoice always", "Pray without ceasing"],
+            "correct_answer": "Jesus wept",
+            "explanation": "John 11:35 is the shortest verse in most English translations.",
+            "reference": "https://www.biblegateway.com/passage/?search=John+11%3A35",
+            "category": "New Testament"
+        },
+        {
+            "text": "What Old Testament book contains the story of Samson?",
+            "options": ["Judges", "Joshua", "1 Samuel", "Numbers"],
+            "correct_answer": "Judges",
+            "explanation": "Samson’s story is found in Judges 13–16.",
+            "reference": "https://www.biblegateway.com/passage/?search=Judges+13-16",
+            "category": "Old Testament"
+        },
+        {
+            "text": "Who had a vision of a valley of dry bones?",
+            "options": ["Ezekiel", "Isaiah", "Jeremiah", "Daniel"],
+            "correct_answer": "Ezekiel",
+            "explanation": "Ezekiel saw the valley of dry bones in a vision. (Ezekiel 37)",
+            "reference": "https://www.biblegateway.com/passage/?search=Ezekiel+37",
+            "category": "Old Testament"
+        },
+        {
+            "text": "Which king saw the writing on the wall?",
+            "options": ["Belshazzar", "Nebuchadnezzar", "Darius", "Cyrus"],
+            "correct_answer": "Belshazzar",
+            "explanation": "Belshazzar saw the mysterious writing on the wall. (Daniel 5)",
+            "reference": "https://www.biblegateway.com/passage/?search=Daniel+5",
+            "category": "Old Testament"
+        },
+        {
+            "text": "Who was the mother of Samuel the prophet?",
+            "options": ["Hannah", "Rachel", "Leah", "Rebekah"],
+            "correct_answer": "Hannah",
+            "explanation": "Hannah prayed for a son and gave birth to Samuel. (1 Samuel 1)",
+            "reference": "https://www.biblegateway.com/passage/?search=1+Samuel+1",
+            "category": "Old Testament"
+        },
+        {
+            "text": "What Jewish festival commemorates the events in the Book of Esther?",
+            "options": ["Purim", "Passover", "Hanukkah", "Tabernacles"],
+            "correct_answer": "Purim",
+            "explanation": "Purim celebrates the deliverance of the Jews as recorded in Esther.",
+            "reference": "https://www.biblegateway.com/passage/?search=Esther+9",
+            "category": "Old Testament"
+        },
+        {
+            "text": "Which disciple doubted Jesus' resurrection until he saw Him?",
+            "options": ["Thomas", "Peter", "Philip", "Andrew"],
+            "correct_answer": "Thomas",
+            "explanation": "Thomas is known as 'Doubting Thomas' because he demanded proof. (John 20:24–29)",
+            "reference": "https://www.biblegateway.com/passage/?search=John+20%3A24-29",
+            "category": "New Testament"
+        },
+        {
+            "text": "Which prophet married a prostitute as a symbol of Israel’s unfaithfulness?",
+            "options": ["Hosea", "Amos", "Joel", "Malachi"],
+            "correct_answer": "Hosea",
+            "explanation": "Hosea’s marriage to Gomer symbolized Israel's spiritual adultery. (Hosea 1)",
+            "reference": "https://www.biblegateway.com/passage/?search=Hosea+1",
+            "category": "Old Testament"
+        },
+        {
+            "text": "Which disciple was a tax collector?",
+            "options": ["Matthew", "James", "Simon", "Bartholomew"],
+            "correct_answer": "Matthew",
+            "explanation": "Matthew was a former tax collector. (Matthew 9:9)",
+            "reference": "https://www.biblegateway.com/passage/?search=Matthew+9%3A9",
+            "category": "New Testament"
+        },
+        {
+            "text": "What New Testament book quotes the Old Testament the most?",
+            "options": ["Matthew", "Romans", "Hebrews", "Revelation"],
+            "correct_answer": "Matthew",
+            "explanation": "Matthew frequently references Old Testament prophecy.",
+            "reference": "https://www.biblegateway.com/passage/?search=Matthew+1",
+            "category": "New Testament"
+        },
+        {
+            "text": "How many chapters are in the book of Psalms?",
+            "options": ["150", "100", "120", "180"],
+            "correct_answer": "150",
+            "explanation": "Psalms has 150 chapters—the most of any book in the Bible.",
+            "reference": "https://www.biblegateway.com/passage/?search=Psalm+1",
+            "category": "Old Testament"
+        },
+        {
+            "text": "Who fell asleep and fell out of a window while Paul was preaching?",
+            "options": ["Eutychus", "Tychicus", "Barnabas", "Silas"],
+            "correct_answer": "Eutychus",
+            "explanation": "Eutychus fell from a window and was revived by Paul. (Acts 20:9)",
+            "reference": "https://www.biblegateway.com/passage/?search=Acts+20%3A9",
+            "category": "New Testament"
+        },
+        {
+            "text": "Which Old Testament figure was known for his patience?",
+            "options": ["Job", "Moses", "Noah", "David"],
+            "correct_answer": "Job",
+            "explanation": "Job remained faithful through intense suffering. (Job 1–2)",
+            "reference": "https://www.biblegateway.com/passage/?search=Job+1",
+            "category": "Old Testament"
+        },
+        {
+            "text": "What language was most of the Old Testament originally written in?",
+            "options": ["Hebrew", "Greek", "Aramaic", "Latin"],
+            "correct_answer": "Hebrew",
+            "explanation": "Most of the Old Testament was written in Hebrew.",
+            "reference": "https://en.wikipedia.org/wiki/Hebrew_Bible",
+            "category": "General Knowledge"
+        },
+        {
+            "text": "Who had a vision of a statue with a gold head and iron feet?",
+            "options": ["Nebuchadnezzar", "Daniel", "Belshazzar", "Cyrus"],
+            "correct_answer": "Nebuchadnezzar",
+            "explanation": "Nebuchadnezzar had the dream which Daniel interpreted. (Daniel 2)",
+            "reference": "https://www.biblegateway.com/passage/?search=Daniel+2",
+            "category": "Old Testament"
+        },
+        {
+            "text": "Who was Paul's companion on his first missionary journey?",
+            "options": ["Barnabas", "Silas", "Timothy", "John Mark"],
+            "correct_answer": "Barnabas",
+            "explanation": "Barnabas accompanied Paul on his first mission trip. (Acts 13:2)",
+            "reference": "https://www.biblegateway.com/passage/?search=Acts+13%3A2",
+            "category": "New Testament"
+        },
+        {
+            "text": "Who was the first king of the divided northern kingdom of Israel?",
+            "options": ["Jeroboam", "Rehoboam", "Ahab", "Jehu"],
+            "correct_answer": "Jeroboam",
+            "explanation": "Jeroboam ruled the northern tribes after the kingdom split. (1 Kings 12)",
+            "reference": "https://www.biblegateway.com/passage/?search=1+Kings+12",
+            "category": "Old Testament"
+        },
+        {
+            "text": "In which epistle is the 'armor of God' described?",
+            "options": ["Ephesians", "Galatians", "Philippians", "Colossians"],
+            "correct_answer": "Ephesians",
+            "explanation": "Paul describes the armor of God in Ephesians 6.",
+            "reference": "https://www.biblegateway.com/passage/?search=Ephesians+6",
+            "category": "New Testament"
+        },
+        {
+            "text": "Which king ordered the massacre of infants in Bethlehem?",
+            "options": ["Herod", "Caesar", "Pilate", "Nero"],
+            "correct_answer": "Herod",
+            "explanation": "King Herod ordered the massacre to kill baby Jesus. (Matthew 2:16)",
+            "reference": "https://www.biblegateway.com/passage/?search=Matthew+2%3A16",
+            "category": "New Testament"
+        },
+        {
+            "text": "Who is the 'weeping prophet' known for his laments?",
+            "options": ["Jeremiah", "Ezekiel", "Isaiah", "Micah"],
+            "correct_answer": "Jeremiah",
+            "explanation": "Jeremiah is called the weeping prophet. (Jeremiah 9:1)",
+            "reference": "https://www.biblegateway.com/passage/?search=Jeremiah+9%3A1",
+            "category": "Old Testament"
+        }
         {
             'text': 'Who was the first martyr of the Christian church?',
             'options': ['Stephen', 'James', 'Peter', 'Paul'],
@@ -655,10 +1543,13 @@ def register_routes(app):
             return redirect(url_for('welcome'))
         
         try:
+            # Get the actual score points from session
+            actual_score = session.get('score', 0)
+            total_questions = len(session['questions'])
+            max_score = total_questions * 20  # 20 points per question
             correct_answers = sum(1 for q, a in zip(session['questions'], session['answers'])
                                 if a == q['correct_answer'])
-            total_questions = len(session['questions'])
-            score = int((correct_answers / total_questions) * 100)
+            accuracy = int((correct_answers / total_questions) * 100)
             
             questions = []
             for q, a in zip(session['questions'], session['answers']):
@@ -671,9 +1562,12 @@ def register_routes(app):
             session.pop('questions', None)
             session.pop('answers', None)
             session.pop('difficulty', None)
+            session.pop('score', None)
             
             return render_template('results.html',
-                                score=score,
+                                score=actual_score,
+                                max_score=max_score,
+                                accuracy=accuracy,
                                 correct_answers=correct_answers,
                                 total_questions=total_questions,
                                 questions=questions)
