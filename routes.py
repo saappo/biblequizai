@@ -1070,7 +1070,7 @@ SAMPLE_QUESTIONS = {
             "explanation": "Jeremiah is called the weeping prophet. (Jeremiah 9:1)",
             "reference": "https://www.biblegateway.com/passage/?search=Jeremiah+9%3A1",
             "category": "Old Testament"
-        }
+        },
         {
             'text': 'Who was the first martyr of the Christian church?',
             'options': ['Stephen', 'James', 'Peter', 'Paul'],
