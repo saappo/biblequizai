@@ -1493,10 +1493,23 @@ def register_routes(app):
             now = datetime.utcnow().timestamp()
             start_time = session['start_times'][-1] if session['start_times'] else now
             time_taken = max(1, int(now - start_time))  # At least 1 second
-            # Scoring: max 20 points per question, -1 per second elapsed (min 5)
-            max_points = 20
-            min_points = 5
-            points = max(min_points, max_points - time_taken)
+            
+            # New scoring system based on difficulty
+            if difficulty == 'Easy':
+                max_points = 12  # 12 points per question = 60 total for 5 questions
+            elif difficulty == 'Medium':
+                max_points = 18  # 18 points per question = 90 total for 5 questions
+            else:  # Hard
+                max_points = 24  # 24 points per question = 120 total for 5 questions
+            
+            # Bonus for quick answers (optional - you can remove this if you want flat scoring)
+            # Give full points for answers under 10 seconds, slight penalty for slower answers
+            if time_taken <= 10:
+                points = max_points
+            else:
+                # Small penalty for taking longer than 10 seconds
+                penalty = min(3, (time_taken - 10) // 5)  # Max 3 point penalty
+                points = max(max_points - penalty, max_points // 2)  # At least half points
             # Get current question
             current_idx = len(session['answers'])
             current_question = session['questions'][current_idx]
@@ -1523,6 +1536,14 @@ def register_routes(app):
         if 'reference' not in current_question:
             current_question['reference'] = "https://www.biblegateway.com/"
             
+        # Calculate max score based on difficulty
+        if difficulty == 'Easy':
+            max_score = len(session['questions']) * 12  # 60 total for 5 questions
+        elif difficulty == 'Medium':
+            max_score = len(session['questions']) * 18  # 90 total for 5 questions
+        else:  # Hard
+            max_score = len(session['questions']) * 24  # 120 total for 5 questions
+            
         return render_template('quiz.html',
             question=current_question,
             difficulty=difficulty,
@@ -1531,7 +1552,7 @@ def register_routes(app):
             show_feedback=show_feedback,
             user_answer=user_answer,
             score=session.get('score', 0),
-            max_score=len(session['questions'])*20,
+            max_score=max_score,
             progress_percent=progress_percent
         )
 
@@ -1546,7 +1567,16 @@ def register_routes(app):
             # Get the actual score points from session
             actual_score = session.get('score', 0)
             total_questions = len(session['questions'])
-            max_score = total_questions * 20  # 20 points per question
+            difficulty = session.get('difficulty', 'Easy')
+            
+            # Calculate max score based on difficulty
+            if difficulty == 'Easy':
+                max_score = total_questions * 12  # 60 total for 5 questions
+            elif difficulty == 'Medium':
+                max_score = total_questions * 18  # 90 total for 5 questions
+            else:  # Hard
+                max_score = total_questions * 24  # 120 total for 5 questions
+                
             correct_answers = sum(1 for q, a in zip(session['questions'], session['answers'])
                                 if a == q['correct_answer'])
             accuracy = int((correct_answers / total_questions) * 100)
@@ -1641,8 +1671,10 @@ def register_routes(app):
 
     @app.route('/play-as-guest')
     def play_as_guest():
-        guest = User(username="Guest", is_guest=True)
+        # Create a guest user with a temporary email
+        guest = User(email="guest@temp.com", is_guest=True)
+        guest.set_password("guest_password")
         db.session.add(guest)
         db.session.commit()
         login_user(guest)
-        return redirect(url_for('quiz')) 
+        return redirect(url_for('welcome')) 

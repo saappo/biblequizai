@@ -1,10 +1,17 @@
 import os
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-key-please-change-in-production'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-key-please-change-in-production-2024'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///bible_quiz.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = False
+    
+    # Load environment variables from .env file if it exists
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except ImportError:
+        pass
 
 class DevelopmentConfig(Config):
     DEBUG = True
