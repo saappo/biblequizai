@@ -16,7 +16,7 @@ SAMPLE_QUESTIONS = {
             'options': ['Noah', 'Moses', 'Abraham', 'David'],
             'correct_answer': 'Noah',
             'category': 'Old Testament',
-            'explanation': 'Noah was commanded by God to build an ark to save his family and animals from the flood. (Genesis 6-9)',
+            'explanation': 'Noah was commanded by God to build an ark to save his family and pairs of all animals from the great flood. (Genesis 6-9)',
             'reference': 'https://www.biblegateway.com/passage/?search=Genesis+6-9&version=NIV'
         },
         {
@@ -24,7 +24,7 @@ SAMPLE_QUESTIONS = {
             'options': ['10', '12', '13', '14'],
             'correct_answer': '12',
             'category': 'New Testament',
-            'explanation': 'Jesus chose twelve disciples to be His closest followers. (Matthew 10:1-4)',
+            'explanation': 'Jesus chose twelve disciples to be His closest followers, also called apostles. (Matthew 10:1-4)',
             'reference': 'https://www.biblegateway.com/passage/?search=Matthew+10%3A1-4&version=NIV'
         },
         {
@@ -48,7 +48,7 @@ SAMPLE_QUESTIONS = {
             'options': ['David', 'Daniel', 'Joseph', 'Jonah'],
             'correct_answer': 'Daniel',
             'category': 'Old Testament',
-            'explanation': 'Daniel was thrown into the lion\'s den for praying to God, but God protected him. (Daniel 6)',
+            'explanation': 'Daniel was thrown into the lion's den for praying to God, but God protected him. (Daniel 6)',
             'reference': 'https://www.biblegateway.com/passage/?search=Daniel+6&version=NIV'
         },
         {
@@ -66,30 +66,6 @@ SAMPLE_QUESTIONS = {
             'category': 'Old Testament',
             'explanation': 'Genesis is the first book of the Bible, describing creation and early history. (Genesis 1:1)',
             'reference': 'https://www.biblegateway.com/passage/?search=Genesis+1%3A1&version=NIV'
-        },
-        {
-            'text': 'Who was the first king of Israel?',
-            'options': ['Saul', 'David', 'Solomon', 'Samuel'],
-            'correct_answer': 'Saul',
-            'category': 'Old Testament',
-            'explanation': 'Saul was anointed by Samuel as the first king of Israel. (1 Samuel 10:1)',
-            'reference': 'https://www.biblegateway.com/passage/?search=1+Samuel+10%3A1&version=NIV'
-        },
-        {
-            'text': 'What was the name of the place where Jesus was born?',
-            'options': ['Bethlehem', 'Nazareth', 'Jerusalem', 'Galilee'],
-            'correct_answer': 'Bethlehem',
-            'category': 'New Testament',
-            'explanation': 'Jesus was born in Bethlehem, fulfilling prophecy. (Luke 2:1-7)',
-            'reference': 'https://www.biblegateway.com/passage/?search=Luke+2%3A1-7&version=NIV'
-        },
-        {
-            'text': 'How many books are in the New Testament?',
-            'options': ['27', '39', '66', '73'],
-            'correct_answer': '27',
-            'category': 'General',
-            'explanation': 'The New Testament contains 27 books, from Matthew to Revelation.',
-            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+1&version=NIV'
         }
     ],
     'Medium': [
@@ -98,7 +74,7 @@ SAMPLE_QUESTIONS = {
             'options': ['Sarah', 'Rebecca', 'Rachel', 'Leah'],
             'correct_answer': 'Sarah',
             'category': 'Old Testament',
-            'explanation': 'Sarah was Abraham\'s wife and the mother of Isaac. (Genesis 17:15-19)',
+            'explanation': 'Sarah was Abraham's wife and the mother of Isaac. (Genesis 17:15-19)',
             'reference': 'https://www.biblegateway.com/passage/?search=Genesis+17%3A15-19&version=NIV'
         },
         {
@@ -124,6 +100,56 @@ SAMPLE_QUESTIONS = {
             'category': 'New Testament',
             'explanation': 'Jesus was baptized by John the Baptist in the Jordan River. (Matthew 3:13-17)',
             'reference': 'https://www.biblegateway.com/passage/?search=Matthew+3%3A13-17&version=NIV'
+        },
+        {
+            'text': 'How many books are in the New Testament?',
+            'options': ['27', '39', '66', '73'],
+            'correct_answer': '27',
+            'category': 'General',
+            'explanation': 'The New Testament contains 27 books, from Matthew to Revelation.',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+1&version=NIV'
+        },
+        {
+            'text': 'Who was the first king of Israel?',
+            'options': ['Saul', 'David', 'Solomon', 'Samuel'],
+            'correct_answer': 'Saul',
+            'category': 'Old Testament',
+            'explanation': 'Saul was anointed by Samuel as the first king of Israel. (1 Samuel 10:1)',
+            'reference': 'https://www.biblegateway.com/passage/?search=1+Samuel+10%3A1&version=NIV'
+        },
+        {
+            'text': 'What was the name of the place where Jesus was born?',
+            'options': ['Bethlehem', 'Nazareth', 'Jerusalem', 'Galilee'],
+            'correct_answer': 'Bethlehem',
+            'category': 'New Testament',
+            'explanation': 'Jesus was born in Bethlehem, fulfilling prophecy. (Luke 2:1-7)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Luke+2%3A1-7&version=NIV'
+        }
+    ],
+    'Hard': [
+        {
+            'text': 'What was the name of the high priest who questioned Jesus?',
+            'options': ['Caiaphas', 'Annas', 'Pilate', 'Herod'],
+            'correct_answer': 'Caiaphas',
+            'category': 'New Testament',
+            'explanation': 'Caiaphas was the high priest who led the questioning of Jesus before His crucifixion. (Matthew 26:57-68)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+26%3A57-68&version=NIV'
+        },
+        {
+            'text': 'How many years did the Israelites wander in the wilderness?',
+            'options': ['30', '40', '50', '60'],
+            'correct_answer': '40',
+            'category': 'Old Testament',
+            'explanation': 'The Israelites wandered in the wilderness for 40 years before entering the Promised Land. (Numbers 14:33-34)',
+            'reference': 'https://www.biblegateway.com/passage/?search=Numbers+14%3A33-34&version=NIV'
+        },
+        {
+            'text': 'What was the name of the place where Jesus was crucified?',
+            'options': ['Golgotha', 'Gethsemane', 'Bethlehem', 'Nazareth'],
+            'correct_answer': 'Golgotha',
+            'category': 'New Testament',
+            'explanation': 'Jesus was crucified at Golgotha, also called the Place of the Skull. (John 19:17-18)',
+            'reference': 'https://www.biblegateway.com/passage/?search=John+19%3A17-18&version=NIV'
         },
         {
             'text': 'Who was the father of John the Baptist?',
@@ -156,104 +182,6 @@ SAMPLE_QUESTIONS = {
             'category': 'Old Testament',
             'explanation': 'Elijah was taken up to heaven in a whirlwind with a chariot of fire. (2 Kings 2:11)',
             'reference': 'https://www.biblegateway.com/passage/?search=2+Kings+2%3A11&version=NIV'
-        },
-        {
-            'text': 'What was the name of the place where Jesus was crucified?',
-            'options': ['Golgotha', 'Gethsemane', 'Bethlehem', 'Nazareth'],
-            'correct_answer': 'Golgotha',
-            'category': 'New Testament',
-            'explanation': 'Jesus was crucified at Golgotha, also called the Place of the Skull. (John 19:17-18)',
-            'reference': 'https://www.biblegateway.com/passage/?search=John+19%3A17-18&version=NIV'
-        },
-        {
-            'text': 'What was the name of the high priest who questioned Jesus?',
-            'options': ['Caiaphas', 'Annas', 'Pilate', 'Herod'],
-            'correct_answer': 'Caiaphas',
-            'category': 'New Testament',
-            'explanation': 'Caiaphas was the high priest who led the questioning of Jesus before His crucifixion. (Matthew 26:57-68)',
-            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+26%3A57-68&version=NIV'
-        }
-    ],
-    'Hard': [
-        {
-            'text': 'How many years did the Israelites wander in the wilderness?',
-            'options': ['30', '40', '50', '60'],
-            'correct_answer': '40',
-            'category': 'Old Testament',
-            'explanation': 'The Israelites wandered in the wilderness for 40 years before entering the Promised Land. (Numbers 14:33-34)',
-            'reference': 'https://www.biblegateway.com/passage/?search=Numbers+14%3A33-34&version=NIV'
-        },
-        {
-            'text': 'Who was the first martyr of the Christian church?',
-            'options': ['Stephen', 'James', 'Peter', 'Paul'],
-            'correct_answer': 'Stephen',
-            'category': 'New Testament',
-            'explanation': 'Stephen was the first Christian martyr, stoned to death for his faith. (Acts 7:54-60)',
-            'reference': 'https://www.biblegateway.com/passage/?search=Acts+7%3A54-60&version=NIV'
-        },
-        {
-            'text': 'What was the name of the place where Jesus prayed before His arrest?',
-            'options': ['Gethsemane', 'Golgotha', 'Bethlehem', 'Nazareth'],
-            'correct_answer': 'Gethsemane',
-            'category': 'New Testament',
-            'explanation': 'Jesus prayed in the Garden of Gethsemane before His arrest. (Matthew 26:36-46)',
-            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+26%3A36-46&version=NIV'
-        },
-        {
-            'text': 'Who was the first Gentile to be baptized?',
-            'options': ['Cornelius', 'Lydia', 'The Ethiopian eunuch', 'The Philippian jailer'],
-            'correct_answer': 'Cornelius',
-            'category': 'New Testament',
-            'explanation': 'Cornelius was the first Gentile to be baptized, showing the gospel was for all people. (Acts 10)',
-            'reference': 'https://www.biblegateway.com/passage/?search=Acts+10&version=NIV'
-        },
-        {
-            'text': 'What was the name of the mountain where Jesus gave the Sermon on the Mount?',
-            'options': ['Mount of Olives', 'Mount Sinai', 'Mount Horeb', 'Mount Ararat'],
-            'correct_answer': 'Mount of Olives',
-            'category': 'New Testament',
-            'explanation': 'Jesus gave the Sermon on the Mount, teaching His disciples. (Matthew 5-7)',
-            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+5-7&version=NIV'
-        },
-        {
-            'text': 'Who was the first person to see Jesus after His resurrection?',
-            'options': ['Mary Magdalene', 'Peter', 'John', 'The disciples'],
-            'correct_answer': 'Mary Magdalene',
-            'category': 'New Testament',
-            'explanation': 'Mary Magdalene was the first person to see Jesus after His resurrection. (John 20:11-18)',
-            'reference': 'https://www.biblegateway.com/passage/?search=John+20%3A11-18&version=NIV'
-        },
-        {
-            'text': 'What was the name of the place where Jesus was tempted by Satan?',
-            'options': ['The wilderness', 'The temple', 'The mountain', 'The desert'],
-            'correct_answer': 'The wilderness',
-            'category': 'New Testament',
-            'explanation': 'Jesus was tempted by Satan in the wilderness for 40 days. (Matthew 4:1-11)',
-            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+4%3A1-11&version=NIV'
-        },
-        {
-            'text': 'Who was the first person to be baptized by John the Baptist?',
-            'options': ['Jesus', 'Peter', 'Andrew', 'John'],
-            'correct_answer': 'Jesus',
-            'category': 'New Testament',
-            'explanation': 'Jesus was baptized by John the Baptist in the Jordan River. (Matthew 3:13-17)',
-            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+3%3A13-17&version=NIV'
-        },
-        {
-            'text': 'What was the name of the place where Jesus performed His first miracle?',
-            'options': ['Cana', 'Bethlehem', 'Nazareth', 'Jerusalem'],
-            'correct_answer': 'Cana',
-            'category': 'New Testament',
-            'explanation': 'Jesus performed His first miracle at a wedding in Cana, turning water into wine. (John 2:1-11)',
-            'reference': 'https://www.biblegateway.com/passage/?search=John+2%3A1-11&version=NIV'
-        },
-        {
-            'text': 'Who was the first person to recognize Jesus as the Messiah?',
-            'options': ['Peter', 'John', 'Andrew', 'Simon'],
-            'correct_answer': 'Peter',
-            'category': 'New Testament',
-            'explanation': 'Peter was the first to recognize Jesus as the Messiah, the Son of the living God. (Matthew 16:16)',
-            'reference': 'https://www.biblegateway.com/passage/?search=Matthew+16%3A16&version=NIV'
         }
     ]
 }
@@ -619,8 +547,9 @@ def register_routes(app):
             session['start_times'].append(now)
             session.modified = True
             show_feedback = True
-            # If last question, show feedback but don't redirect yet
-            # User will click "Finish Quiz" to go to results
+            # If last question, go to results
+            if len(session['answers']) >= len(session['questions']):
+                return redirect(url_for('public_quiz_results'))
         else:
             # Not POST: get current question
             current_question = session['questions'][current_idx]

@@ -1,3 +1,4 @@
+TEST123
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,146 +7,655 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bible Quiz - {{ difficulty }}</title>
+    <title>Today's Bible Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f8f9fa;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f9fafb;
+            color: #111827;
+            line-height: 1.6;
         }
-        .quiz-container {
-            background-color: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+
+        .min-h-screen {
+            min-height: 100vh;
         }
-        .question {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            color: #333;
+
+        .py-8 {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
         }
-        .options {
+
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .max-w-4xl {
+            max-width: 56rem;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .flex {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
         }
-        .option {
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
+
+        .items-center {
+            align-items: center;
         }
-        .option:hover {
-            background-color: #f0f0f0;
-            border-color: #007bff;
+
+        .justify-between {
+            justify-content: space-between;
         }
-        .option.selected {
-            background-color: #e3f2fd;
-            border-color: #007bff;
+
+        .justify-center {
+            justify-content: center;
         }
-        .submit-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin-top: 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.1em;
-            transition: background-color 0.2s;
-        }
-        .submit-btn:hover {
-            background-color: #0056b3;
-        }
-        .progress {
-            margin-bottom: 20px;
-            color: #666;
-        }
-        .timer {
-            text-align: right;
-            color: #666;
-            margin-bottom: 20px;
-        }
-        .stop-quiz {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #dc3545;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-            transition: background-color 0.2s;
-        }
-        .stop-quiz:hover {
-            background-color: #c82333;
-        }
-        .logo-container {
-            flex-shrink: 0;
+
+        .text-center {
             text-align: center;
-            padding: 10px;
-            margin-top: 20px;
-            border-top: 1px solid rgba(212, 196, 168, 0.3);
         }
-        .logo {
-            max-width: 120px;
-            height: auto;
-            transition: opacity 0.2s;
-            opacity: 0.8;
+
+        .text-2xl {
+            font-size: 1.5rem;
         }
-        .logo:hover {
-            opacity: 1;
+
+        .text-xl {
+            font-size: 1.25rem;
         }
-        .footer-link {
+
+        .text-lg {
+            font-size: 1.125rem;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        .font-medium {
+            font-weight: 500;
+        }
+
+        .text-gray-900 {
+            color: #111827;
+        }
+
+        .text-gray-800 {
+            color: #1f2937;
+        }
+
+        .text-gray-600 {
+            color: #4b5563;
+        }
+
+        .text-gray-50 {
+            color: #f9fafb;
+        }
+
+        .text-white {
+            color: #ffffff;
+        }
+
+        .text-green-600 {
+            color: #059669;
+        }
+
+        .text-red-600 {
+            color: #dc2626;
+        }
+
+        .text-blue-600 {
+            color: #2563eb;
+        }
+
+        .bg-white {
+            background-color: #ffffff;
+        }
+
+        .bg-gray-50 {
+            background-color: #f9fafb;
+        }
+
+        .bg-gray-600 {
+            background-color: #4b5563;
+        }
+
+        .bg-blue-600 {
+            background-color: #2563eb;
+        }
+
+        .bg-green-600 {
+            background-color: #059669;
+        }
+
+        .bg-red-600 {
+            background-color: #dc2626;
+        }
+
+        .bg-green-50 {
+            background-color: #f0fdf4;
+        }
+
+        .bg-red-50 {
+            background-color: #fef2f2;
+        }
+
+        .border-2 {
+            border-width: 2px;
+        }
+
+        .border-green-200 {
+            border-color: #bbf7d0;
+        }
+
+        .border-red-200 {
+            border-color: #fecaca;
+        }
+
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+
+        .rounded {
+            border-radius: 0.25rem;
+        }
+
+        .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .p-6 {
+            padding: 1.5rem;
+        }
+
+        .p-4 {
+            padding: 1rem;
+        }
+
+        .py-3 {
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+
+        .px-6 {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        .px-2 {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+
+        .py-1 {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+        }
+
+        .space-y-6 > * + * {
+            margin-top: 1.5rem;
+        }
+
+        .space-y-4 > * + * {
+            margin-top: 1rem;
+        }
+
+        .space-y-1 > * + * {
+            margin-top: 0.25rem;
+        }
+
+        .space-x-2 > * + * {
+            margin-left: 0.5rem;
+        }
+
+        .gap-4 {
+            gap: 1rem;
+        }
+
+        .w-24 {
+            width: 6rem;
+        }
+
+        .w-5 {
+            width: 1.25rem;
+        }
+
+        .h-5 {
+            height: 1.25rem;
+        }
+
+        .w-12 {
+            width: 3rem;
+        }
+
+        .h-12 {
+            height: 3rem;
+        }
+
+        .opacity-50 {
+            opacity: 0.5;
+        }
+
+        .cursor-not-allowed {
+            cursor: not-allowed;
+        }
+
+        .transition-colors {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+
+        .hover\:bg-gray-700:hover {
+            background-color: #374151;
+        }
+
+        .hover\:bg-blue-700:hover {
+            background-color: #1d4ed8;
+        }
+
+        .hover\:bg-green-700:hover {
+            background-color: #047857;
+        }
+
+        .hover\:text-gray-800:hover {
+            color: #1f2937;
+        }
+
+        .disabled\:opacity-50:disabled {
+            opacity: 0.5;
+        }
+
+        .disabled\:cursor-not-allowed:disabled {
+            cursor: not-allowed;
+        }
+
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        .border-b-2 {
+            border-bottom-width: 2px;
+        }
+
+        .border-blue-600 {
+            border-color: #2563eb;
+        }
+
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        /* Quiz Card Styles */
+        .quiz-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .quiz-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .difficulty-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.3);
+            height: 0.5rem;
+            border-radius: 0.25rem;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: white;
+            height: 100%;
+            border-radius: 0.25rem;
+            transition: width 0.3s ease;
+        }
+
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .options-container {
+            padding: 2rem;
+        }
+
+        .option {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .option:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .option.selected {
+            background: #dbeafe;
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+
+        .option.correct {
+            background: #dcfce7;
+            border-color: #16a34a;
+            color: #15803d;
+        }
+
+        .option.incorrect {
+            background: #fef2f2;
+            border-color: #dc2626;
+            color: #b91c1c;
+        }
+
+        .option-icon {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .explanation {
+            background: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            margin: 1rem 2rem;
+            border-radius: 0.5rem;
+        }
+
+        .explanation-icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .reference-link {
+            color: #3b82f6;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .navigation {
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
             text-decoration: none;
-            color: inherit;
-            display: inline-block;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #2563eb;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #4b5563;
+        }
+
+        .btn-success {
+            background: #059669;
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #047857;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #374151;
+        }
+
+        .score-display {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+            color: #6b7280;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .quiz-header {
+                padding: 1.5rem;
+            }
+            
+            .options-container {
+                padding: 1.5rem;
+            }
+            
+            .navigation {
+                padding: 1.5rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <div class="timer">Time remaining: <span id="timer">30</span> seconds</div>
-        <div class="progress">Question {{ current_question }}/{{ total_questions }}</div>
-        
-        <div class="question">
-            {{ question.text }}
-        </div>
-        
-        <form method="POST" action="{{ url_for('public_quiz', difficulty=difficulty) }}" autocomplete="off" id="quizForm">
-            <div class="options">
-                {% for option in question.options %}
-                <label class="option">
-                    <input type="radio" name="answer" value="{{ option }}" required autocomplete="off">
-                    {{ option }}
-                </label>
-                {% endfor %}
+    <div class="min-h-screen py-8 px-4">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-8">
+                <a href="{{ url_for('welcome') }}" class="back-link">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                    <span>Back to Home</span>
+                </a>
+                
+                <div class="text-center">
+                    <h1 class="text-2xl font-bold text-gray-900">Today's Bible Quiz</h1>
+                    <div class="score-display">Score: {{ score }}/{{ max_score }}</div>
+                </div>
+                
+                <div class="w-24"></div>
             </div>
-            
-            <button type="submit" class="submit-btn" id="submitBtn">Submit Answer</button>
-        </form>
-        <a href="{{ url_for('welcome') }}" class="stop-quiz">Stop Quiz</a>
+
+            <!-- Quiz Card -->
+            <div class="quiz-card mb-8">
+                <div class="quiz-header">
+                    <div class="difficulty-badge">{{ difficulty }}</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{ progress_percent }}%"></div>
+                    </div>
+                    <div class="question-text">{{ question.text }}</div>
+                </div>
+
+                <form method="POST" action="{{ url_for('public_quiz', difficulty=difficulty) }}" id="quizForm">
+                    <div class="options-container">
+                        {% for option in question.options %}
+                        <label class="option {% if show_feedback %}{% if option == question.correct_answer %}correct{% elif option == user_answer %}incorrect{% endif %}{% elif option == user_answer %}selected{% endif %}" 
+                               onclick="selectOption(this, '{{ option }}')">
+                            <span>{{ option }}</span>
+                            {% if show_feedback %}
+                                {% if option == question.correct_answer %}
+                                    <span class="option-icon">✓</span>
+                                {% elif option == user_answer %}
+                                    <span class="option-icon">✗</span>
+                                {% endif %}
+                            {% endif %}
+                            <input type="radio" name="answer" value="{{ option }}" style="display: none;" 
+                                   {% if option == user_answer %}checked{% endif %}
+                                   {% if show_feedback %}disabled{% endif %}>
+                        </label>
+                        {% endfor %}
+                    </div>
+
+                    {% if not show_feedback %}
+                    <div class="navigation">
+                        <div></div>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">Submit Answer</button>
+                    </div>
+                    {% endif %}
+                </form>
+
+                {% if show_feedback %}
+                <div class="explanation">
+                    <div class="flex items-center mb-2">
+                        <span class="explanation-icon">📖</span>
+                        <strong>Explanation:</strong>
+                    </div>
+                    <p>{{ question.explanation or 'No explanation provided.' }}</p>
+                    {% if question.reference %}
+                    <p class="mt-2">
+                        <a href="{{ question.reference }}" class="reference-link" target="_blank">
+                            Biblical Reference: Historical Context
+                        </a>
+                    </p>
+                    {% endif %}
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="goPrevious()" 
+                            {% if current_question == 1 %}disabled{% endif %}>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        Previous
+                    </button>
+
+                    <button class="btn btn-primary" onclick="goNext()">
+                        {% if current_question == total_questions %}
+                            Finish Quiz
+                        {% else %}
+                            Next
+                        {% endif %}
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
 
-    <footer class="logo-container">
-        <a href="https://www.saappo.com" target="_blank" class="footer-link" title="Visit Saappo">
-            <img src="{{ url_for('static', filename='images/saappo-logo.png') }}" alt="Saappo Logo" class="logo">
-        </a>
-    </footer>
-
     <script>
-        // Clear any cached form data on page load
-        window.onload = function() {
-            document.getElementById('quizForm').reset();
-            // Clear any selected options
+        function selectOption(element, value) {
+            // Remove selected class from all options
             document.querySelectorAll('.option').forEach(opt => {
                 opt.classList.remove('selected');
             });
-        };
+            
+            // Add selected class to clicked option
+            element.classList.add('selected');
+            
+            // Check the radio button
+            const radio = element.querySelector('input[type="radio"]');
+            radio.checked = true;
+        }
+
+        function goPrevious() {
+            window.location.href = '{{ url_for("public_quiz", difficulty=difficulty) }}?prev=1';
+        }
+
+        function goNext() {
+            {% if current_question == total_questions %}
+                window.location.href = '{{ url_for("public_quiz_results") }}';
+            {% else %}
+                window.location.href = '{{ url_for("public_quiz", difficulty=difficulty) }}?next=1';
+            {% endif %}
+        }
 
         // Prevent double submission
         document.getElementById('quizForm').addEventListener('submit', function(e) {
@@ -156,39 +666,6 @@
             }
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
-        });
-
-        // Timer functionality
-        let timeLeft = 30;
-        const timerElement = document.getElementById('timer');
-        
-        const timer = setInterval(() => {
-            timeLeft--;
-            timerElement.textContent = timeLeft;
-            
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                const form = document.getElementById('quizForm');
-                if (!form.querySelector('input[name="answer"]:checked')) {
-                    // If no answer selected, select the first option
-                    form.querySelector('input[name="answer"]').checked = true;
-                }
-                form.submit();
-            }
-        }, 1000);
-
-        // Option selection styling
-        document.querySelectorAll('.option').forEach(option => {
-            option.addEventListener('click', function() {
-                // Remove selected class from all options
-                document.querySelectorAll('.option').forEach(opt => {
-                    opt.classList.remove('selected');
-                });
-                // Add selected class to clicked option
-                this.classList.add('selected');
-                // Check the radio button
-                this.querySelector('input[type="radio"]').checked = true;
-            });
         });
     </script>
 </body>
