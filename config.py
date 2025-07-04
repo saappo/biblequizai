@@ -20,7 +20,7 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     DEBUG = False
     # In production, use environment variables for sensitive data
-    SECRET_KEY = os.environ.get('SECRET_KEY')
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'production-secret-key-change-me'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///bible_quiz.db'
     
     # Handle PostgreSQL URL conversion for Render
@@ -28,9 +28,8 @@ class ProductionConfig(Config):
         # Convert postgres:// to postgresql:// for newer SQLAlchemy versions
         SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace('postgres://', 'postgresql://', 1)
     
-    # Ensure we have a valid database URL
-    if not SQLALCHEMY_DATABASE_URI:
-        raise ValueError("DATABASE_URL environment variable is required in production")
+    # Note: We'll allow SQLite for now to get the app running
+    # In production, you should set up a PostgreSQL database
 
 class TestingConfig(Config):
     TESTING = True
