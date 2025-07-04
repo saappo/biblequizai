@@ -1247,13 +1247,14 @@ def register_routes(app):
             user = User.query.filter_by(email=email).first()
             
             if user and check_password_hash(user.password_hash, password):
-                session['user_id'] = user.id
+                login_user(user)
                 flash('Login successful!', 'success')
-                return redirect(url_for('dashboard'))
+                return redirect(url_for('welcome'))
             else:
                 flash('Invalid email or password', 'error')
+                return redirect(url_for('welcome'))
         
-        return render_template('login.html')
+        return redirect(url_for('welcome'))
 
     @app.route('/register', methods=['GET', 'POST'])
     def register():
@@ -1261,10 +1262,15 @@ def register_routes(app):
         if request.method == 'POST':
             email = request.form.get('email')
             password = request.form.get('password')
+            confirm_password = request.form.get('confirm_password')
+            
+            if password != confirm_password:
+                flash('Passwords do not match', 'error')
+                return redirect(url_for('welcome'))
             
             if User.query.filter_by(email=email).first():
                 flash('Email already registered', 'error')
-                return redirect(url_for('register'))
+                return redirect(url_for('welcome'))
             
             new_user = User(
                 email=email,
@@ -1275,13 +1281,14 @@ def register_routes(app):
                 db.session.add(new_user)
                 db.session.commit()
                 flash('Registration successful! Please login.', 'success')
-                return redirect(url_for('login'))
+                return redirect(url_for('welcome'))
             except Exception as e:
                 logger.error(f'Error during registration: {str(e)}')
                 db.session.rollback()
                 flash('An error occurred during registration', 'error')
+                return redirect(url_for('welcome'))
         
-        return render_template('register.html')
+        return redirect(url_for('welcome'))
 
     @app.route('/dashboard')
     def dashboard():
@@ -1464,12 +1471,36 @@ def register_routes(app):
                 session['difficulty'] = difficulty
                 session['score'] = 0
                 session['start_times'] = []  # Track start time for each question
+                session['used_questions'] = []  # Track used questions to prevent repetition
                 session.modified = True
 
             # Start a new quiz on GET (if no questions or navigation)
             if request.method == 'GET' and not next_q and not prev_q:
+                # Clear session but preserve used_questions to prevent repetition across quizzes
+                used_questions = session.get('used_questions', [])
                 session.clear()
-                questions = random.sample(SAMPLE_QUESTIONS[difficulty], min(5, len(SAMPLE_QUESTIONS[difficulty])))
+                session['used_questions'] = used_questions
+                # Get all available questions for this difficulty
+                available_questions = SAMPLE_QUESTIONS[difficulty]
+                # Ensure we don't have more questions than available
+                num_questions = min(5, len(available_questions))
+                
+                # Filter out questions that have been used in this session
+                used_questions = session.get('used_questions', [])
+                unused_questions = [q for q in available_questions if q['text'] not in used_questions]
+                
+                # If we don't have enough unused questions, reset the used questions list
+                if len(unused_questions) < num_questions:
+                    unused_questions = available_questions
+                    session['used_questions'] = []
+                
+                # Randomly select questions without repetition
+                questions = random.sample(unused_questions, num_questions)
+                
+                # Mark these questions as used
+                for question in questions:
+                    session['used_questions'].append(question['text'])
+                
                 session['questions'] = questions
                 session['answers'] = []
                 session['difficulty'] = difficulty
@@ -1671,10 +1702,13 @@ def register_routes(app):
 
     @app.route('/play-as-guest')
     def play_as_guest():
-        # Create a guest user with a temporary email
-        guest = User(email="guest@temp.com", is_guest=True)
-        guest.set_password("guest_password")
-        db.session.add(guest)
-        db.session.commit()
+        # Check if guest user already exists
+        guest = User.query.filter_by(email="guest@temp.com").first()
+        if not guest:
+            # Create a guest user with a temporary email
+            guest = User(email="guest@temp.com", is_guest=True)
+            guest.set_password("guest_password")
+            db.session.add(guest)
+            db.session.commit()
         login_user(guest)
         return redirect(url_for('welcome')) 
