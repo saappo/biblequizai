@@ -82,6 +82,40 @@
             background: #2563eb;
             color: #fff;
         }
+
+        /* Flashing animation for the start quiz button */
+        @keyframes flash {
+            0%, 50%, 100% {
+                opacity: 1;
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            }
+            25%, 75% {
+                opacity: 0.8;
+                transform: scale(1.05);
+                box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+            }
+        }
+
+        .btn-flash {
+            animation: flash 1.5s ease-in-out 3;
+        }
+
+        .btn-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+            }
+        }
     </style>
 </head>
 <body>
@@ -106,7 +140,7 @@
                 </p>
                 <form id="startQuizForm" method="get">
                     <input type="hidden" name="difficulty" id="selectedDifficultyInput" value="Easy">
-                    <button type="submit" class="btn btn-gradient mb-2" id="startQuizBtn" style="min-width: 200px;">Start Today's Quiz</button>
+                    <button type="submit" class="btn btn-gradient mb-2" id="startQuizBtn" style="min-width: 200px;">🚀 Start Today's Quiz!</button>
                 </form>
                 <a href="{{ url_for('play_as_guest') }}" class="btn btn-outline">Play as Guest</a>
                 <div class="d-flex justify-content-center gap-2 mt-3">
@@ -253,7 +287,22 @@
                     this.classList.add('difficulty-selected');
                     selectedDifficulty = this.getAttribute('data-difficulty');
                     selectedDifficultyInput.value = selectedDifficulty;
-                    startQuizBtn.textContent = `Start ${selectedDifficulty} Quiz`;
+                    startQuizBtn.innerHTML = `🚀 Start ${selectedDifficulty} Quiz!`;
+                    
+                    // Add flashing animation to draw attention to the start button
+                    startQuizBtn.classList.remove('btn-flash', 'btn-pulse');
+                    void startQuizBtn.offsetWidth; // Trigger reflow
+                    startQuizBtn.classList.add('btn-flash');
+                    
+                    // Add pulse effect after flash animation completes
+                    setTimeout(() => {
+                        startQuizBtn.classList.add('btn-pulse');
+                    }, 4500); // 3 flashes * 1.5s = 4.5s
+                    
+                    // Remove pulse effect after 10 seconds
+                    setTimeout(() => {
+                        startQuizBtn.classList.remove('btn-pulse');
+                    }, 14500);
                 });
             });
         }
