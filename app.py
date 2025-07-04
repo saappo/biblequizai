@@ -4,11 +4,16 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from models import db, User
 from routes import register_routes
-from config import Config
+from config import Config, ProductionConfig
 
-def create_app(config_class=Config):
+def create_app(config_class=None):
     app = Flask(__name__)
-    app.config.from_object(config_class)
+    
+    # Use production config on Render, development config locally
+    if os.environ.get('FLASK_ENV') == 'production':
+        app.config.from_object(ProductionConfig)
+    else:
+        app.config.from_object(Config)
     
     # Initialize extensions
     db.init_app(app)

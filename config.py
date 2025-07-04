@@ -27,6 +27,10 @@ class ProductionConfig(Config):
     if SQLALCHEMY_DATABASE_URI and SQLALCHEMY_DATABASE_URI.startswith('postgres://'):
         # Convert postgres:// to postgresql:// for newer SQLAlchemy versions
         SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace('postgres://', 'postgresql://', 1)
+    
+    # Ensure we have a valid database URL
+    if not SQLALCHEMY_DATABASE_URI:
+        raise ValueError("DATABASE_URL environment variable is required in production")
 
 class TestingConfig(Config):
     TESTING = True

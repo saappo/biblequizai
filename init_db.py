@@ -1,14 +1,43 @@
-from app import create_app, db
-from flask_migrate import upgrade
+#!/usr/bin/env python3
+"""
+Database initialization script for Bible Quiz AI
+Run this on Render to set up the database tables
+"""
+
+import os
+import sys
+from app import create_app
+from models import db, User, Question, Quiz, UserResponse, Suggestion, ContactMessage
 
 def init_database():
+    """Initialize the database with tables"""
+    print("🚀 Initializing Bible Quiz AI Database...")
+    
+    # Create the Flask app
     app = create_app()
+    
     with app.app_context():
-        # Create all tables
-        db.create_all()
-        # Run any pending migrations
-        upgrade()
-        print("Database initialized successfully!")
+        try:
+            # Create all tables
+            print("📋 Creating database tables...")
+            db.create_all()
+            print("✅ Database tables created successfully!")
+            
+            # Check if we have any questions
+            question_count = Question.query.count()
+            print(f"📊 Found {question_count} questions in database")
+            
+            # Check if we have any users
+            user_count = User.query.count()
+            print(f"👥 Found {user_count} users in database")
+            
+            print("\n🎉 Database initialization complete!")
+            return True
+            
+        except Exception as e:
+            print(f"❌ Error initializing database: {str(e)}")
+            return False
 
 if __name__ == '__main__':
-    init_database() 
+    success = init_database()
+    sys.exit(0 if success else 1) 
