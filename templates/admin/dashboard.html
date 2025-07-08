@@ -1,263 +1,412 @@
-{% extends "base.html" %}
-
-{% block title %}Admin Dashboard - Keep Alley Trash{% endblock %}
-
-{% block content %}
-<div class="row">
-    <!-- Sidebar -->
-    <div class="col-md-3">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Admin Menu</h5>
-                <div class="list-group list-group-flush">
-                    <a href="#suggestions" class="list-group-item list-group-item-action active" data-bs-toggle="list">
-                        <i class="bi bi-lightbulb me-2"></i>Suggestions
-                    </a>
-                    <a href="#users" class="list-group-item list-group-item-action" data-bs-toggle="list">
-                        <i class="bi bi-people me-2"></i>Users
-                    </a>
-                    <a href="#settings" class="list-group-item list-group-item-action" data-bs-toggle="list">
-                        <i class="bi bi-gear me-2"></i>Settings
-                    </a>
-                </div>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Bible Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: #007bff;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .content {
+            padding: 30px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .btn-secondary {
+            background: #6c757d;
+        }
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        .btn-success {
+            background: #28a745;
+        }
+        .btn-success:hover {
+            background: #1e7e34;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        .options-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background: #f8f9fa;
+        }
+        .option-input {
+            margin-bottom: 10px;
+        }
+        .option-input input {
+            width: calc(100% - 20px);
+        }
+        .add-option-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .add-option-btn:hover {
+            background: #1e7e34;
+        }
+        .remove-option-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .remove-option-btn:hover {
+            background: #c82333;
+        }
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+        .questions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .questions-table th, .questions-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .questions-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        .questions-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .questions-table tr:hover {
+            background: #e9ecef;
+        }
+        .action-btn {
+            padding: 5px 10px;
+            margin: 2px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .edit-btn {
+            background: #ffc107;
+            color: #212529;
+        }
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Admin Dashboard</h1>
+            <a href="{{ url_for('admin_logout') }}" class="logout-btn">Logout</a>
         </div>
         
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Quick Stats</h5>
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Total Suggestions:</span>
-                    <span class="badge bg-primary">{{ stats.total_suggestions }}</span>
+        <div class="content">
+            {% if success_message %}
+            <div class="success-message">
+                {{ success_message }}
+            </div>
+            {% endif %}
+            
+            {% if error_message %}
+            <div class="error-message">
+                {{ error_message }}
+            </div>
+            {% endif %}
+
+            <!-- Statistics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.total_questions }}</div>
+                    <div class="stat-label">Total Questions</div>
                 </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Pending Review:</span>
-                    <span class="badge bg-warning">{{ stats.pending_suggestions }}</span>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.total_days }}</div>
+                    <div class="stat-label">Total Days</div>
                 </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Approved:</span>
-                    <span class="badge bg-success">{{ stats.approved_suggestions }}</span>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.next_day }}</div>
+                    <div class="stat-label">Next Day</div>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <span>Rejected:</span>
-                    <span class="badge bg-danger">{{ stats.rejected_suggestions }}</span>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.total_users }}</div>
+                    <div class="stat-label">Total Users</div>
                 </div>
+            </div>
+
+            <!-- Bulk Add Questions via JSON -->
+            <div class="section">
+                <h2>Add Multiple Questions (JSON)</h2>
+                <form method="POST" action="{{ url_for('admin_add_questions_json') }}">
+                    <div class="form-group">
+                        <label for="json_questions">Paste JSON Array of Questions:</label>
+                        <textarea id="json_questions" name="json_questions" rows="10" style="font-family:monospace; font-size:1em;" placeholder='[
+  {"text": "...", "options": ["A", "B", "C", "D"], "correct_answer": "A", "difficulty": "Easy", "category": "General", "question_type": "Factual", "explanation": "..."},
+  ...
+]'></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Add Questions (JSON)</button>
+                </form>
+            </div>
+
+            <!-- Add Question Form -->
+            <div class="section">
+                <h2>Add New Question</h2>
+                <form method="POST" action="{{ url_for('admin_add_question') }}">
+                    <div class="form-group">
+                        <label for="question_type">Question Type:</label>
+                        <select id="question_type" name="question_type" required>
+                            <option value="">Select Type</option>
+                            <option value="Factual">Factual</option>
+                            <option value="Fill in the Blank">Fill in the Blank</option>
+                            <option value="Multiple Choice">Multiple Choice</option>
+                            <option value="True/False">True/False</option>
+                            <option value="Matching">Matching</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="text">Question Text:</label>
+                        <textarea id="text" name="text" required placeholder="Enter your question here..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Options:</label>
+                        <div class="options-container" id="options-container">
+                            <div class="option-input">
+                                <input type="text" name="options[]" placeholder="Option 1" required>
+                            </div>
+                            <div class="option-input">
+                                <input type="text" name="options[]" placeholder="Option 2" required>
+                            </div>
+                            <div class="option-input">
+                                <input type="text" name="options[]" placeholder="Option 3" required>
+                            </div>
+                            <div class="option-input">
+                                <input type="text" name="options[]" placeholder="Option 4" required>
+                            </div>
+                        </div>
+                        <button type="button" class="add-option-btn" onclick="addOption()">Add Option</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="correct_answer">Correct Answer:</label>
+                        <input type="text" id="correct_answer" name="correct_answer" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="difficulty">Difficulty:</label>
+                        <select id="difficulty" name="difficulty" required>
+                            <option value="">Select Difficulty</option>
+                            <option value="Easy">Easy</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">Category:</label>
+                        <select id="category" name="category" required>
+                            <option value="">Select Category</option>
+                            <option value="Old Testament">Old Testament</option>
+                            <option value="New Testament">New Testament</option>
+                            <option value="General">General</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="explanation">Explanation (Optional):</label>
+                        <textarea id="explanation" name="explanation" placeholder="Provide an explanation for the correct answer..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success">Add Question</button>
+                </form>
+            </div>
+
+            <!-- Recent Questions -->
+            <div class="section">
+                <h2>Recent Questions</h2>
+                <table class="questions-table">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Type</th>
+                            <th>Question</th>
+                            <th>Difficulty</th>
+                            <th>Category</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for question in recent_questions %}
+                        <tr>
+                            <td>{{ question.day }}</td>
+                            <td>{{ question.question_type }}</td>
+                            <td>{{ question.text[:50] }}...</td>
+                            <td>{{ question.difficulty }}</td>
+                            <td>{{ question.category }}</td>
+                            <td>
+                                <button class="action-btn edit-btn" onclick="editQuestion({{ question.id }})">Edit</button>
+                                <button class="action-btn delete-btn" onclick="deleteQuestion({{ question.id }})">Delete</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    
-    <!-- Main Content -->
-    <div class="col-md-9">
-        <div class="tab-content">
-            <!-- Suggestions Tab -->
-            <div class="tab-pane fade show active" id="suggestions">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Manage Suggestions</h5>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown">
-                                Filter
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="?status=all">All</a></li>
-                                <li><a class="dropdown-item" href="?status=pending">Pending</a></li>
-                                <li><a class="dropdown-item" href="?status=approved">Approved</a></li>
-                                <li><a class="dropdown-item" href="?status=rejected">Rejected</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        {% if suggestions %}
-                            {% for suggestion in suggestions %}
-                            <div class="card mb-3 suggestion-card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h6 class="mb-0">{{ suggestion.title }}</h6>
-                                    <span class="badge bg-{{ suggestion.status_color }}">{{ suggestion.status }}</span>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">{{ suggestion.content }}</p>
-                                    {% if suggestion.location %}
-                                    <p class="location mb-2">
-                                        <i class="bi bi-geo-alt-fill me-1"></i>
-                                        {{ suggestion.location }}
-                                    </p>
-                                    {% endif %}
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <small class="text-muted">
-                                            <i class="bi bi-clock me-1"></i>
-                                            Submitted {{ suggestion.created_at.strftime('%B %d, %Y') }}
-                                        </small>
-                                        {% if suggestion.status == 'pending' %}
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-success btn-sm" 
-                                                    onclick="updateStatus({{ suggestion.id }}, 'approved')">
-                                                <i class="bi bi-check-lg"></i> Approve
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm"
-                                                    onclick="updateStatus({{ suggestion.id }}, 'rejected')">
-                                                <i class="bi bi-x-lg"></i> Reject
-                                            </button>
-                                        </div>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        {% else %}
-                            <div class="text-center py-4">
-                                <i class="bi bi-inbox display-4 text-muted mb-3"></i>
-                                <h5>No Suggestions Found</h5>
-                                <p class="text-muted">There are no suggestions matching your current filter.</p>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Users Tab -->
-            <div class="tab-pane fade" id="users">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Manage Users</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                        <th>Joined</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for user in users %}
-                                    <tr>
-                                        <td>{{ user.email }}</td>
-                                        <td>
-                                            <span class="badge bg-{{ 'primary' if user.is_admin else 'secondary' }}">
-                                                {{ 'Admin' if user.is_admin else 'User' }}
-                                            </span>
-                                        </td>
-                                        <td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-sm btn-outline-primary"
-                                                        onclick="toggleAdmin({{ user.id }})">
-                                                    {{ 'Remove Admin' if user.is_admin else 'Make Admin' }}
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-outline-danger"
-                                                        onclick="deleteUser({{ user.id }})">
-                                                    Delete
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Settings Tab -->
-            <div class="tab-pane fade" id="settings">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Site Settings</h5>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ url_for('admin.update_settings') }}">
-                            {{ settings_form.csrf_token }}
-                            
-                            <div class="mb-3">
-                                <label for="site_name" class="form-label">Site Name</label>
-                                {{ settings_form.site_name(class="form-control") }}
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="contact_email" class="form-label">Contact Email</label>
-                                {{ settings_form.contact_email(class="form-control") }}
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="auto_approve" class="form-label">Auto-approve Suggestions</label>
-                                {{ settings_form.auto_approve(class="form-check-input") }}
-                                <div class="form-text">If enabled, suggestions will be automatically approved.</div>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary">Save Settings</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
 
-{% block extra_js %}
-<script>
-function updateStatus(suggestionId, status) {
-    if (confirm('Are you sure you want to ' + status + ' this suggestion?')) {
-        fetch(`/admin/suggestion/${suggestionId}/${status}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token() }}'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            } else {
-                alert('Error updating suggestion status');
-            }
-        });
-    }
-}
+    <script>
+        function addOption() {
+            const container = document.getElementById('options-container');
+            const optionCount = container.children.length;
+            const newOption = document.createElement('div');
+            newOption.className = 'option-input';
+            newOption.innerHTML = '<input type="text" name="options[]" placeholder="Option ' + (optionCount + 1) + '" required>' +
+                                 '<button type="button" class="remove-option-btn" onclick="removeOption(this)">Remove</button>';
+            container.appendChild(newOption);
+        }
 
-function toggleAdmin(userId) {
-    if (confirm('Are you sure you want to change this user\'s admin status?')) {
-        fetch(`/admin/user/${userId}/toggle-admin`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token() }}'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            } else {
-                alert('Error updating user status');
-            }
-        });
-    }
-}
+        function removeOption(button) {
+            button.parentElement.remove();
+        }
 
-function deleteUser(userId) {
-    if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
-        fetch(`/admin/user/${userId}/delete`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token() }}'
+        function editQuestion(questionId) {
+            // Implement edit functionality
+            alert('Edit functionality coming soon!');
+        }
+
+        function deleteQuestion(questionId) {
+            if (confirm('Are you sure you want to delete this question?')) {
+                // Implement delete functionality
+                alert('Delete functionality coming soon!');
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            } else {
-                alert('Error deleting user');
-            }
-        });
-    }
-}
-</script>
-{% endblock %} 
+        }
+    </script>
+</body>
+</html> 

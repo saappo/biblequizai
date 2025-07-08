@@ -1,10 +1,11 @@
 from flask import render_template, request, redirect, url_for, flash, session, jsonify, make_response, get_flashed_messages
-from flask_login import login_required, current_user, login_user, AnonymousUserMixin
-from models import User, Quiz, Question, UserResponse, Suggestion, db, ContactMessage
+from flask_login import login_required, current_user, login_user, logout_user, AnonymousUserMixin
+from models import User, Question, UserResponse, Suggestion, db, ContactMessage
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
 import random
 from datetime import datetime
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -923,7 +924,7 @@ SAMPLE_QUESTIONS = {
             "text": "What Old Testament book contains the story of Samson?",
             "options": ["Judges", "Joshua", "1 Samuel", "Numbers"],
             "correct_answer": "Judges",
-            "explanation": "Samson’s story is found in Judges 13–16.",
+            "explanation": "Samson's story is found in Judges 13–16.",
             "reference": "https://www.biblegateway.com/passage/?search=Judges+13-16",
             "category": "Old Testament"
         },
@@ -968,10 +969,10 @@ SAMPLE_QUESTIONS = {
             "category": "New Testament"
         },
         {
-            "text": "Which prophet married a prostitute as a symbol of Israel’s unfaithfulness?",
+            "text": "Which prophet married a prostitute as a symbol of Israel's unfaithfulness?",
             "options": ["Hosea", "Amos", "Joel", "Malachi"],
             "correct_answer": "Hosea",
-            "explanation": "Hosea’s marriage to Gomer symbolized Israel's spiritual adultery. (Hosea 1)",
+            "explanation": "Hosea's marriage to Gomer symbolized Israel's spiritual adultery. (Hosea 1)",
             "reference": "https://www.biblegateway.com/passage/?search=Hosea+1",
             "category": "Old Testament"
         },
@@ -1237,6 +1238,120 @@ def register_routes(app):
         
         return redirect(url_for('admin'))
 
+    # Admin login route
+    @app.route('/admin/login', methods=['GET', 'POST'])
+    def admin_login():
+        if request.method == 'POST':
+            email = request.form.get('email')
+            password = request.form.get('password')
+            
+            user = User.query.filter_by(email=email).first()
+            
+            if user and user.check_password(password) and user.is_admin:
+                login_user(user)
+                return redirect(url_for('admin_dashboard'))
+            else:
+                return render_template('admin/login.html', error='Invalid credentials or admin access denied')
+        
+        return render_template('admin/login.html')
+
+    # Admin dashboard route
+    @app.route('/admin/dashboard')
+    @login_required
+    def admin_dashboard():
+        if not current_user.is_admin:
+            flash('Access denied. Admin privileges required.', 'error')
+            return redirect(url_for('home'))
+        
+        # Get statistics
+        stats = {
+            'total_questions': Question.query.count(),
+            'total_days': db.session.query(db.func.max(Question.day)).scalar() or 0,
+            'next_day': Question.get_next_day(),
+            'total_users': User.query.count()
+        }
+        
+        # Get recent questions
+        recent_questions = Question.query.order_by(Question.created_at.desc()).limit(10).all()
+        
+        return render_template('admin/dashboard.html', 
+                             stats=stats, 
+                             recent_questions=recent_questions)
+
+    # Admin add question route
+    @app.route('/admin/add-question', methods=['POST'])
+    @login_required
+    def admin_add_question():
+        if not current_user.is_admin:
+            flash('Access denied. Admin privileges required.', 'error')
+            return redirect(url_for('admin_dashboard'))
+        
+        try:
+            # Get form data
+            question_type = request.form.get('question_type')
+            text = request.form.get('text')
+            options = request.form.getlist('options[]')
+            correct_answer = request.form.get('correct_answer')
+            difficulty = request.form.get('difficulty')
+            category = request.form.get('category')
+            explanation = request.form.get('explanation', '')
+            
+            # Validate required fields
+            if not all([question_type, text, correct_answer, difficulty, category]):
+                flash('All required fields must be filled.', 'error')
+                return redirect(url_for('admin_dashboard'))
+            
+            if len(options) < 2:
+                flash('At least 2 options are required.', 'error')
+                return redirect(url_for('admin_dashboard'))
+            
+            if correct_answer not in options:
+                flash('Correct answer must be one of the options.', 'error')
+                return redirect(url_for('admin_dashboard'))
+            
+            # Get next day
+            next_day = Question.get_next_day()
+            
+            # Create question
+            question = Question(
+                day=next_day,
+                question_type=question_type,
+                text=text,
+                options=options,
+                correct_answer=correct_answer,
+                explanation=explanation,
+                difficulty=difficulty,
+                category=category,
+                question_hash=Question.generate_hash(text, options, correct_answer)
+            )
+            
+            # Check for duplicates
+            existing = Question.query.filter_by(question_hash=question.question_hash).first()
+            if existing:
+                flash('This question already exists (duplicate detected).', 'error')
+                return redirect(url_for('admin_dashboard'))
+            
+            # Save to database
+            db.session.add(question)
+            db.session.commit()
+            
+            flash(f'Question added successfully for Day {next_day}!', 'success')
+            
+        except Exception as e:
+            db.session.rollback()
+            logger.error(f"Error adding question: {str(e)}")
+            flash('Error adding question. Please try again.', 'error')
+        
+        return redirect(url_for('admin_dashboard'))
+
+    # Admin logout route
+    @app.route('/admin/logout')
+    @login_required
+    def admin_logout():
+        logout_user()
+        flash('You have been logged out.', 'info')
+        return redirect(url_for('home'))
+
     @app.route('/login', methods=['GET', 'POST'])
     def login():
         logger.debug('Accessing login page')
@@ -1247,9 +1362,13 @@ def register_routes(app):
             user = User.query.filter_by(email=email).first()
             
             if user and check_password_hash(user.password_hash, password):
-                login_user(user)
-                flash('Login successful!', 'success')
-                return redirect(url_for('welcome'))
+                if hasattr(user, 'is_admin') and user.is_admin:
+                    login_user(user)
+                    flash('Login successful!', 'success')
+                    return redirect(url_for('admin_dashboard'))
+                else:
+                    flash('Access denied. Admin privileges required.', 'error')
+                    return redirect(url_for('welcome'))
             else:
                 flash('Invalid email or password', 'error')
                 return redirect(url_for('welcome'))
@@ -1341,11 +1460,22 @@ def register_routes(app):
         
         try:
             if 'questions' not in session or 'difficulty' not in session or session['difficulty'] != difficulty:
-                # Get questions from database based on difficulty
-                questions = Question.query.filter_by(difficulty=difficulty).order_by(db.func.random()).limit(5).all()
+                # Get questions from database based on difficulty and day
+                # First try to get questions for the current day
+                current_day = Question.query.filter_by(difficulty=difficulty).order_by(Question.day.desc()).first()
+                if current_day:
+                    day_to_use = current_day.day
+                else:
+                    # If no questions for this difficulty, use day 1
+                    day_to_use = 1
+                
+                questions = Question.query.filter_by(difficulty=difficulty, day=day_to_use).all()
                 if not questions:
-                    flash('No questions available for this difficulty level', 'error')
-                    return redirect(url_for('home'))
+                    # Fallback to any questions for this difficulty
+                    questions = Question.query.filter_by(difficulty=difficulty).order_by(db.func.random()).limit(5).all()
+                    if not questions:
+                        flash('No questions available for this difficulty level', 'error')
+                        return redirect(url_for('home'))
                 
                 # Convert questions to session-friendly format
                 session_questions = []
@@ -1354,14 +1484,17 @@ def register_routes(app):
                         'text': q.text,
                         'options': q.options,
                         'correct_answer': q.correct_answer,
-                        'category': q.category if hasattr(q, 'category') else 'General'
+                        'category': q.category if hasattr(q, 'category') else 'General',
+                        'question_type': q.question_type,
+                        'explanation': q.explanation
                     })
                 
                 session['questions'] = session_questions
                 session['answers'] = []
                 session['difficulty'] = difficulty
+                session['current_day'] = day_to_use
                 session.modified = True
-                logger.info(f"New quiz initialized with {len(session_questions)} questions")
+                logger.info(f"New quiz initialized with {len(session_questions)} questions for day {day_to_use}")
             
             current_question_index = len(session.get('answers', []))
             if current_question_index >= len(session['questions']):
@@ -1385,6 +1518,8 @@ def register_routes(app):
             return redirect(url_for('home'))
         
         try:
+            print('DEBUG: session[\'questions\']:', session['questions'])
+            print('DEBUG: session[\'answers\']:', session['answers'])
             correct_answers = sum(1 for q, a in zip(session['questions'], session['answers'])
                                 if a == q['correct_answer'])
             total_questions = len(session['questions'])
@@ -1395,8 +1530,11 @@ def register_routes(app):
                 questions.append({
                     'text': q['text'],
                     'user_answer': a,
-                    'correct_answer': q['correct_answer']
+                    'correct_answer': q['correct_answer'],
+                    'explanation': q.get('explanation', ''),
+                    'reference': q.get('reference', '')
                 })
+            print('DEBUG: questions passed to template:', questions)
             
             session.pop('questions', None)
             session.pop('answers', None)
@@ -1480,31 +1618,74 @@ def register_routes(app):
                 used_questions = session.get('used_questions', [])
                 session.clear()
                 session['used_questions'] = used_questions
-                # Get all available questions for this difficulty
-                available_questions = SAMPLE_QUESTIONS[difficulty]
+                
+                # Get questions from database based on difficulty and day
+                # First try to get questions for the current day
+                current_day = Question.query.filter_by(difficulty=difficulty).order_by(Question.day.desc()).first()
+                if current_day:
+                    day_to_use = current_day.day
+                else:
+                    # If no questions for this difficulty, use day 1
+                    day_to_use = 1
+                
+                questions = Question.query.filter_by(difficulty=difficulty, day=day_to_use).all()
+                if not questions:
+                    # Fallback to any questions for this difficulty
+                    questions = Question.query.filter_by(difficulty=difficulty).order_by(db.func.random()).limit(5).all()
+                    if not questions:
+                        # Final fallback to sample questions
+                        available_questions = SAMPLE_QUESTIONS[difficulty]
+                        num_questions = min(5, len(available_questions))
+                        questions = random.sample(available_questions, num_questions)
+                        
+                        # Convert to database format
+                        db_questions = []
+                        for q in questions:
+                            db_questions.append({
+                                'text': q['text'],
+                                'options': q['options'],
+                                'correct_answer': q['correct_answer'],
+                                'category': q.get('category', 'General'),
+                                'question_type': 'Factual',
+                                'explanation': q.get('explanation', '')
+                            })
+                        questions = db_questions
+                    else:
+                        # Convert database questions to session format
+                        db_questions = []
+                        for q in questions:
+                            db_questions.append({
+                                'text': q.text,
+                                'options': q.options,
+                                'correct_answer': q.correct_answer,
+                                'category': q.category if hasattr(q, 'category') else 'General',
+                                'question_type': q.question_type,
+                                'explanation': q.explanation
+                            })
+                        questions = db_questions
+                else:
+                    # Convert database questions to session format
+                    db_questions = []
+                    for q in questions:
+                        db_questions.append({
+                            'text': q.text,
+                            'options': q.options,
+                            'correct_answer': q.correct_answer,
+                            'category': q.category if hasattr(q, 'category') else 'General',
+                            'question_type': q.question_type,
+                            'explanation': q.explanation
+                        })
+                    questions = db_questions
+                
                 # Ensure we don't have more questions than available
-                num_questions = min(5, len(available_questions))
-                
-                # Filter out questions that have been used in this session
-                used_questions = session.get('used_questions', [])
-                unused_questions = [q for q in available_questions if q['text'] not in used_questions]
-                
-                # If we don't have enough unused questions, reset the used questions list
-                if len(unused_questions) < num_questions:
-                    unused_questions = available_questions
-                    session['used_questions'] = []
-                
-                # Randomly select questions without repetition
-                questions = random.sample(unused_questions, num_questions)
-                
-                # Mark these questions as used
-                for question in questions:
-                    session['used_questions'].append(question['text'])
+                num_questions = min(5, len(questions))
+                questions = questions[:num_questions]
                 
                 session['questions'] = questions
                 session['answers'] = []
                 session['difficulty'] = difficulty
                 session['score'] = 0
+                session['current_day'] = day_to_use
                 session['start_times'] = [datetime.utcnow().timestamp()]  # Start time for Q1
                 session.modified = True
                 current_idx = 0
@@ -1514,54 +1695,69 @@ def register_routes(app):
                 current_idx = len(session['answers']) if not prev_q else len(session['answers']) - 1
                 show_feedback = False
 
-        # Handle answer submission
+        # Handle answer submission and Next button
         if request.method == 'POST':
-            answer = request.form.get('answer')
-            if not answer:
-                flash('Please select an answer', 'error')
-                return redirect(url_for('public_quiz', difficulty=difficulty))
-            # Calculate time taken for this question
-            now = datetime.utcnow().timestamp()
-            start_time = session['start_times'][-1] if session['start_times'] else now
-            time_taken = max(1, int(now - start_time))  # At least 1 second
-            
-            # New scoring system based on difficulty
-            if difficulty == 'Easy':
-                max_points = 12  # 12 points per question = 60 total for 5 questions
-            elif difficulty == 'Medium':
-                max_points = 18  # 18 points per question = 90 total for 5 questions
-            else:  # Hard
-                max_points = 24  # 24 points per question = 120 total for 5 questions
-            
-            # Bonus for quick answers (optional - you can remove this if you want flat scoring)
-            # Give full points for answers under 10 seconds, slight penalty for slower answers
-            if time_taken <= 10:
-                points = max_points
+            if request.form.get('next'):
+                # User clicked Next, just move to next question
+                current_idx = len(session['answers'])
+                show_feedback = False
+                # Start timer for next question
+                session['start_times'].append(datetime.utcnow().timestamp())
+                session.modified = True
             else:
-                # Small penalty for taking longer than 10 seconds
-                penalty = min(3, (time_taken - 10) // 5)  # Max 3 point penalty
-                points = max(max_points - penalty, max_points // 2)  # At least half points
-            # Get current question
-            current_idx = len(session['answers'])
-            current_question = session['questions'][current_idx]
-            is_correct = (answer == current_question['correct_answer'])
-            if is_correct:
-                session['score'] += points
-            session['answers'].append(answer)
-            session['start_times'].append(now)
-            session.modified = True
-            show_feedback = True
-            # If last question, show feedback but don't redirect yet
-            # User will click "Finish Quiz" to go to results
+                answer = request.form.get('answer')
+                if not answer:
+                    flash('Please select an answer', 'error')
+                    return redirect(url_for('public_quiz', difficulty=difficulty))
+                # Calculate time taken for this question
+                now = datetime.utcnow().timestamp()
+                start_time = session['start_times'][-1] if session['start_times'] else now
+                time_taken = max(1, int(now - start_time))  # At least 1 second
+
+                current_idx = len(session['answers'])
+                if current_idx >= len(session['questions']):
+                    return redirect(url_for('public_quiz_results'))
+
+                # Calculate points for this question
+                if difficulty == 'Easy':
+                    question_points = 12
+                elif difficulty == 'Medium':
+                    question_points = 18
+                else:
+                    question_points = 24
+                # Bonus for quick answers (optional - you can remove this if you want flat scoring)
+                # Give full points for answers under 10 seconds, slight penalty for slower answers
+                if time_taken <= 10:
+                    points = question_points
+                else:
+                    # Small penalty for taking longer than 10 seconds
+                    penalty = min(3, (time_taken - 10) // 5)  # Max 3 point penalty
+                    points = max(question_points - penalty, question_points // 2)  # At least half points
+                # Get current question
+                current_question = session['questions'][current_idx]
+                is_correct = (answer == current_question['correct_answer'])
+                if is_correct:
+                    session['score'] += points
+                session['answers'].append(answer)
+                session['start_times'].append(now)
+                session.modified = True
+                show_feedback = True
+                # If last question, show feedback but don't redirect yet
+                # User will click "Finish Quiz" to go to results
         else:
             # Not POST: get current question
+            current_idx = len(session['answers'])
             current_question = session['questions'][current_idx]
 
         # Prepare template variables
-        user_answer = session['answers'][-1] if show_feedback and session['answers'] else None
+        if show_feedback:
+            user_answer = session['answers'][-1] if session['answers'] else None
+        else:
+            user_answer = None
         progress_percent = int(((current_idx+1)/len(session['questions']))*100)
         
         # Add explanation and reference to question object if not present
+        current_question = session['questions'][current_idx]
         if 'explanation' not in current_question:
             current_question['explanation'] = f"This question tests your knowledge of {difficulty.lower()} biblical concepts. Study the relevant passages to deepen your understanding."
         if 'reference' not in current_question:
@@ -1570,10 +1766,13 @@ def register_routes(app):
         # Calculate max score based on difficulty
         if difficulty == 'Easy':
             max_score = len(session['questions']) * 12  # 60 total for 5 questions
+            question_points = 12
         elif difficulty == 'Medium':
             max_score = len(session['questions']) * 18  # 90 total for 5 questions
+            question_points = 18
         else:  # Hard
             max_score = len(session['questions']) * 24  # 120 total for 5 questions
+            question_points = 24
             
         return render_template('quiz.html',
             question=current_question,
@@ -1584,7 +1783,8 @@ def register_routes(app):
             user_answer=user_answer,
             score=session.get('score', 0),
             max_score=max_score,
-            progress_percent=progress_percent
+            progress_percent=progress_percent,
+            question_points=question_points
         )
 
     @app.route('/public-quiz-results')
@@ -1617,7 +1817,9 @@ def register_routes(app):
                 questions.append({
                     'text': q['text'],
                     'user_answer': a,
-                    'correct_answer': q['correct_answer']
+                    'correct_answer': q['correct_answer'],
+                    'explanation': q.get('explanation', ''),
+                    'reference': q.get('reference', '')
                 })
             
             session.pop('questions', None)
@@ -1712,3 +1914,49 @@ def register_routes(app):
             db.session.commit()
         login_user(guest)
         return redirect(url_for('welcome')) 
+
+    @app.route('/admin/add-questions-json', methods=['POST'])
+    @login_required
+    def admin_add_questions_json():
+        if not current_user.is_admin:
+            flash('Access denied. Admin privileges required.', 'error')
+            return redirect(url_for('admin_dashboard'))
+        import json
+        try:
+            json_data = request.form.get('json_questions', '').strip()
+            if not json_data:
+                flash('No JSON data provided.', 'error')
+                return redirect(url_for('admin_dashboard'))
+            questions = json.loads(json_data)
+            if not isinstance(questions, list):
+                flash('JSON must be an array of question objects.', 'error')
+                return redirect(url_for('admin_dashboard'))
+            # Get the next available day number
+            from models import Question
+            max_day = db.session.query(db.func.max(Question.day)).scalar() or 0
+            next_day = max_day + 1
+            added = 0
+            for q in questions:
+                # Basic validation
+                if not all(k in q for k in ('text', 'options', 'correct_answer', 'difficulty', 'category', 'question_type')):
+                    continue
+                # Create and add question
+                question = Question(
+                    text=q['text'],
+                    options=q['options'],
+                    correct_answer=q['correct_answer'],
+                    difficulty=q['difficulty'],
+                    category=q['category'],
+                    question_type=q['question_type'],
+                    explanation=q.get('explanation', ''),
+                    reference=q.get('reference', ''),
+                    day=next_day
+                )
+                db.session.add(question)
+                added += 1
+            db.session.commit()
+            flash(f'Successfully added {added} questions for day {next_day}.', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error adding questions: {e}', 'error')
+        return redirect(url_for('admin_dashboard'))

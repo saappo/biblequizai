@@ -1,0 +1,92 @@
+[
+  {
+    "text": "Who built the ark according to the Bible?",
+    "options": ["Noah", "Moses", "Abraham", "David"],
+    "correct_answer": "Noah",
+    "difficulty": "Easy",
+    "category": "Old Testament",
+    "question_type": "Factual",
+    "explanation": "Noah was commanded by God to build an ark to save his family and animals from the great flood. (Genesis 6-9)"
+  },
+  {
+    "text": "How many disciples did Jesus have?",
+    "options": ["10", "12", "13", "14"],
+    "correct_answer": "12",
+    "difficulty": "Easy",
+    "category": "New Testament",
+    "question_type": "Factual",
+    "explanation": "Jesus chose twelve disciples to be His closest followers, also called apostles. (Matthew 10:1-4)"
+  },
+  {
+    "text": "Complete the verse: 'For God so loved the world that He gave His only begotten Son, that whoever believes in Him should not perish but have _____ life.'",
+    "options": ["eternal", "everlasting", "abundant", "blessed"],
+    "correct_answer": "eternal",
+    "difficulty": "Medium",
+    "category": "New Testament",
+    "question_type": "Fill in the Blank",
+    "explanation": "This is John 3:16, one of the most well-known verses in the Bible."
+  },
+  {
+    "text": "Who was the first man created by God?",
+    "options": ["Adam", "Eve", "Noah", "Abraham"],
+    "correct_answer": "Adam",
+    "difficulty": "Easy",
+    "category": "Old Testament",
+    "question_type": "Factual",
+    "explanation": "Adam was the first human created by God from the dust of the ground. (Genesis 2:7)"
+  },
+  {
+    "text": "What was the first miracle Jesus performed?",
+    "options": ["Walking on water", "Turning water into wine", "Feeding 5000", "Raising Lazarus"],
+    "correct_answer": "Turning water into wine",
+    "difficulty": "Medium",
+    "category": "New Testament",
+    "question_type": "Factual",
+    "explanation": "Jesus turned water into wine at the wedding in Cana, His first recorded miracle. (John 2:1-11)"
+  },
+  {
+    "text": "True or False: The Bible contains exactly 66 books.",
+    "options": ["True", "False"],
+    "correct_answer": "True",
+    "difficulty": "Easy",
+    "category": "General",
+    "question_type": "True/False",
+    "explanation": "The Protestant Bible contains 66 books: 39 in the Old Testament and 27 in the New Testament."
+  },
+  {
+    "text": "Who was thrown into the lion's den?",
+    "options": ["David", "Daniel", "Joseph", "Jonah"],
+    "correct_answer": "Daniel",
+    "difficulty": "Easy",
+    "category": "Old Testament",
+    "question_type": "Factual",
+    "explanation": "Daniel was thrown into the lion's den for praying to God, but God protected him. (Daniel 6)"
+  },
+  {
+    "text": "Match the prophet with their major book: Isaiah",
+    "options": ["Book of Isaiah", "Book of Jeremiah", "Book of Ezekiel", "Book of Daniel"],
+    "correct_answer": "Book of Isaiah",
+    "difficulty": "Medium",
+    "category": "Old Testament",
+    "question_type": "Matching",
+    "explanation": "Isaiah is the author of the Book of Isaiah, one of the major prophetic books."
+  },
+  {
+    "text": "What was the name of Jesus' mother?",
+    "options": ["Mary", "Elizabeth", "Sarah", "Rebecca"],
+    "correct_answer": "Mary",
+    "difficulty": "Easy",
+    "category": "New Testament",
+    "question_type": "Factual",
+    "explanation": "Mary was chosen by God to be the mother of Jesus. (Luke 1:26-38)"
+  },
+  {
+    "text": "Complete the verse: 'The Lord is my shepherd, I shall not _____.'",
+    "options": ["want", "lack", "need", "desire"],
+    "correct_answer": "want",
+    "difficulty": "Medium",
+    "category": "Old Testament",
+    "question_type": "Fill in the Blank",
+    "explanation": "This is from Psalm 23:1, one of the most beloved psalms."
+  }
+] 

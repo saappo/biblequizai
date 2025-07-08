@@ -1,0 +1,8 @@
+# BibleQuizAI Requirements
+# This application uses only Python standard library modules
+# No additional packages are required as tkinter is included with Python
+
+# If you want to enhance the application, you could add:
+# requests>=2.25.1  # For API calls to Bible APIs
+# beautifulsoup4>=4.9.3  # For web scraping Bible content
+# openai>=0.27.0  # For AI-powered question generation 

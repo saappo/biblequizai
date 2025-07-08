@@ -371,19 +371,16 @@
                 <h2>Question Review</h2>
                 {% for q in questions %}
                 <div class="question-item">
-                    <div class="question-text">{{ q.text }}</div>
-                    <div class="answer-text">
-                        <strong>Your answer:</strong> 
-                        <span class="{{ 'correct' if q.user_answer == q.correct_answer else 'incorrect' }}">
-                            {{ q.user_answer }}
-                            {% if q.user_answer == q.correct_answer %} ✓{% else %} ✗{% endif %}
-                        </span>
-                    </div>
+                    <p><strong>Question:</strong> {{ q.text }}</p>
+                    <p><strong>Your answer:</strong> <span class="{{ 'correct' if q.user_answer == q.correct_answer else 'incorrect' }}">{{ q.user_answer }}</span></p>
                     {% if q.user_answer != q.correct_answer %}
-                    <div class="answer-text">
-                        <strong>Correct answer:</strong> 
-                        <span class="correct">{{ q.correct_answer }} ✓</span>
-                    </div>
+                    <p><strong>Correct answer:</strong> <span class="correct">{{ q.correct_answer }}</span></p>
+                    {% endif %}
+                    {% if q.explanation %}
+                    <p><strong>Explanation:</strong> {{ q.explanation }}</p>
+                    {% endif %}
+                    {% if q.reference %}
+                    <p><a href="{{ q.reference }}" target="_blank">Reference</a></p>
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -419,24 +416,6 @@
                         </a>
                     </div>
                 </div>
-            {% elif current_user.is_authenticated and current_user.is_guest %}
-                <div class="auth-section" style="background-color: #fef3c7; border-color: #fde68a;">
-                    <strong style="color: #92400e;">👋 Thanks for playing as a guest!</strong>
-                    <br>
-                    <span style="color: #92400e;">Create an account to save your scores and track your progress.</span>
-                    <br>
-                    <button data-bs-toggle="modal" data-bs-target="#authModal" class="btn btn-primary" style="margin-top: 12px;">
-                        Create an Account
-                    </button>
-                </div>
-            {% else %}
-                <div class="auth-section">
-                    <strong>Want to save your score and track your progress?</strong>
-                    <br>
-                    <button data-bs-toggle="modal" data-bs-target="#authModal" class="btn btn-primary" style="margin-top: 12px;">
-                        Create an Account
-                    </button>
-                </div>
             {% endif %}
         </div>
 
@@ -446,58 +425,6 @@
             </a>
         </footer>
     </div>
-
-    <!-- Authentication Modal -->
-    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="authModalLabel">Sign In</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Login Form -->
-                    <form id="loginForm" method="POST" action="{{ url_for('login') }}" style="display: block;">
-                        <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="loginEmail" name="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="loginPassword" name="password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Sign In</button>
-                    </form>
-
-                    <!-- Registration Form -->
-                    <form id="registerForm" method="POST" action="{{ url_for('register') }}" style="display: none;">
-                        <div class="mb-3">
-                            <label for="registerEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="registerEmail" name="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="registerPassword" name="password" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="confirmPassword" name="confirm_password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Create Account</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <div class="w-100 text-center">
-                        <span id="authToggleText">Don't have an account?</span>
-                        <button type="button" class="btn btn-link" id="authToggleBtn">Create Account</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         // Set up the circular progress indicator
@@ -529,48 +456,6 @@
         setTimeout(function() {
             progressFill.style.transition = 'stroke-dasharray 1s ease-in-out';
         }, 100);
-
-        // Authentication modal functionality
-        function setAuthMode(mode) {
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            const modalTitle = document.getElementById('authModalLabel');
-            const toggleText = document.getElementById('authToggleText');
-            const toggleBtn = document.getElementById('authToggleBtn');
-
-            if (mode === 'signup') {
-                loginForm.style.display = 'none';
-                registerForm.style.display = 'block';
-                modalTitle.textContent = 'Create Account';
-                toggleText.textContent = 'Already have an account?';
-                toggleBtn.textContent = 'Sign In';
-            } else {
-                loginForm.style.display = 'block';
-                registerForm.style.display = 'none';
-                modalTitle.textContent = 'Sign In';
-                toggleText.textContent = 'Don\'t have an account?';
-                toggleBtn.textContent = 'Create Account';
-            }
-        }
-
-        // Toggle between login and register forms
-        document.getElementById('authToggleBtn').addEventListener('click', function() {
-            const loginForm = document.getElementById('loginForm');
-            if (loginForm.style.display === 'block') {
-                setAuthMode('signup');
-            } else {
-                setAuthMode('login');
-            }
-        });
-
-        // Set up registration form to show signup mode by default
-        document.addEventListener('DOMContentLoaded', function() {
-            // If there's a "Create Account" button that was clicked, show signup form
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('signup') === 'true') {
-                setAuthMode('signup');
-            }
-        });
     </script>
 </body>
 </html> 

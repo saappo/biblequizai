@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     last_login = db.Column(db.DateTime)
     is_guest = db.Column(db.Boolean, default=False)
+    is_admin = db.Column(db.Boolean, default=False)  # Add admin flag
     
     # Relationships
     responses = db.relationship('UserResponse', backref='user', lazy=True)
@@ -24,23 +25,12 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-class Quiz(db.Model):
-    __tablename__ = 'quizzes'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    difficulty = db.Column(db.String(20), nullable=False)  # Easy, Medium, Hard
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    is_active = db.Column(db.Boolean, default=True)
-    
-    # Relationships
-    questions = db.relationship('Question', backref='quiz', lazy=True)
-
 class Question(db.Model):
     __tablename__ = 'questions'
     
     id = db.Column(db.Integer, primary_key=True)
-    quiz_id = db.Column(db.Integer, db.ForeignKey('quizzes.id'), nullable=False)
+    day = db.Column(db.Integer, nullable=False)  # Day number (1, 2, 3, etc.)
+    question_type = db.Column(db.String(50), nullable=False)  # Fill in the Blank, Factual, etc.
     text = db.Column(db.Text, nullable=False)
     options = db.Column(db.JSON, nullable=False)  # Store options as JSON array
     correct_answer = db.Column(db.String(500), nullable=False)
@@ -61,6 +51,12 @@ class Question(db.Model):
         sorted_options = sorted(options)
         content = f"{text.lower().strip()}{''.join(sorted_options)}{correct_answer.lower().strip()}"
         return hashlib.sha256(content.encode()).hexdigest()
+
+    @staticmethod
+    def get_next_day():
+        """Get the next available day number"""
+        max_day = db.session.query(db.func.max(Question.day)).scalar()
+        return (max_day or 0) + 1
 
 class UserResponse(db.Model):
     __tablename__ = 'user_responses'
